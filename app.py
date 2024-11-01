@@ -1,12 +1,28 @@
-from flask import Flask
+from decouple import config
+from flask import Flask, jsonify
+from flask_cors import CORS
+from flask_migrate import Migrate
+from flask_restful import Api
 
+from db import db
+from resources.routes import routes
+
+
+environment = config("CONFIG_ENV")
 app = Flask(__name__)
+app.config.from_object(environment)
+db.init_app(app)
 
+api = Api(app)
 
-@app.route('/')
-def hello_world():  # put application's code here
-    return 'Hello World!'
+migrate = Migrate(app, db)
 
+CORS(app)
 
-if __name__ == '__main__':
-    app.run()
+@app.teardown_appcontext
+def close_request(response):
+    db.session.commit()
+    return response
+
+[api.add_resource(*route) for route in routes]
+
