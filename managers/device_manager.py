@@ -1,6 +1,6 @@
 
 from db import db
-from models import RoleType, UserModel
+from models import RoleType, UserModel, HomeModel
 from managers.auth import AuthManager
 
 from flask import request, jsonify
@@ -52,3 +52,17 @@ class DeviceManager:
         db.session.add(user)
         db.session.flush()
         return AuthManager.encode_token(user)
+
+
+    def get_homes(user):
+        query = db.session.query(HomeModel)
+        if user.role.user == RoleType.user:
+            query = query.filter_by(user_id=user.id)
+        return db.session.execute(query).scalar().all()
+
+    def create_home(user, data):
+        data["user_id"] = user.id
+        new_home = HomeModel(**data)
+        db.session.add(new_home)
+        db.session.flush()
+        db.session.commit()
