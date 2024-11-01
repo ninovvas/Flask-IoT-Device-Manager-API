@@ -6,3 +6,5 @@ Flask-Cors==5.0.0
 python-decouple==3.8
 Flask-HTTPAuth==4.8.0
 PyJWT==2.9.0
+marshmallow==3.23.0
+marshmallow-enum==1.5.1
