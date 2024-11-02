@@ -13,7 +13,7 @@ class HomeListCreate(Resource):
     @auth.login_required
     def get(self):
         user = auth.current_user()
-        homes = DeviceManager.get_homes(user)
+        homes = HomeManager.get_homes(user)
         return {"homes": HomeResponseSchema().dump(homes, many=True)}, 200
 
     @auth.login_required
@@ -22,7 +22,7 @@ class HomeListCreate(Resource):
     def post(self):
         data = request.get_json()
         user = auth.current_user()
-        DeviceManager.create_home(user,data)
+        HomeManager.create_home(user,data)
         return {'message': 'Home created successfully'}, 201
 
 class HomeDetail(Resource):
@@ -33,4 +33,22 @@ class HomeDetail(Resource):
         user = auth.current_user()
         home = HomeManager.get_home(user,home_id)
         return {"home": HomeResponseSchema().dump(home)}, 200
+
+    @auth.login_required
+    @permission_required(RoleType.user)
+    @validate_schema(HomeRequestSchema)
+    def put(self, home_id):
+        user = auth.current_user()
+        data = request.get_json()
+        HomeManager.update_home(user,home_id,data)
+        return {'message': 'Home updated successfully'}, 200
+
+    @auth.login_required
+    @permission_required(RoleType.user)
+    def delete(self, home_id):
+        user = auth.current_user()
+        HomeManager.delete_home(user,home_id)
+        return {'message': 'Home deleted successfully'}, 200
+
+
 

@@ -11,6 +11,6 @@ class RoomModel(db.Model):
 
     home_id: Mapped[int] = mapped_column(db.Integer, db.ForeignKey('home.id'), nullable=False)
 
-    home: Mapped["HomeModel"] = relationship('HomeModel', back_populates='room')
+    home: Mapped["HomeModel"] = relationship('HomeModel', back_populates='rooms')
     sensors: Mapped[list['SensorModel']] = relationship('SensorModel', back_populates='room', lazy=True)
 

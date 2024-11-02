@@ -54,15 +54,16 @@ class DeviceManager:
         return AuthManager.encode_token(user)
 
 
-    def get_homes(user):
-        query = db.session.query(HomeModel)
-        if user.role.user == RoleType.user:
-            query = query.filter_by(user_id=user.id)
-        return db.session.execute(query).scalar().all()
+    #def get_homes(user):
+    #    query = db.select(HomeModel)
+    #    if user.role.user == RoleType.user:
+    #        query = query.filter_by(user_id=user.id)
+    #    return db.session.execute(query).scalar().all()
 
-    def create_home(user, data):
-        data["user_id"] = user.id
-        new_home = HomeModel(**data)
-        db.session.add(new_home)
-        db.session.flush()
-        db.session.commit()
+    #def create_home(user, data):
+    #    data["user_id"] = user.id
+    #    new_home = HomeModel(**data)
+    #    db.session.add(new_home)
+    #    db.session.flush()
+    #    db.session.commit()
+    #    db.session.commit()

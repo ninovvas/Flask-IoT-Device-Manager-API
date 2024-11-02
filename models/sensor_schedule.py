@@ -12,4 +12,4 @@ class SensorScheduleModel(db.Model):
     end_time: Mapped[db.DateTime] = mapped_column(db.DateTime, nullable=False)
     action: Mapped[str] = mapped_column(db.String(50), nullable=False)
 
-    sensor: Mapped['SensorModel'] = relationship('Sensor', back_populates='schedules', lazy='joined')
+    sensor: Mapped['SensorModel'] = relationship('SensorModel', back_populates='sensor_schedules', lazy='joined')

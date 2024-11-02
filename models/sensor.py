@@ -12,7 +12,7 @@ class SensorModel(db.Model):
     interface: Mapped[str] = mapped_column(db.String(150), nullable=False)
     room_id: Mapped[int] = mapped_column(db.Integer, db.ForeignKey('room.id'), nullable=True)
 
-    room: Mapped['RoomModel'] = relationship('Room', back_populates='sensors', lazy='joined')
+    room: Mapped['RoomModel'] = relationship('RoomModel', back_populates='sensors', lazy='joined')
     sensor_data: Mapped[list['SensorDataModel']] = relationship('SensorDataModel', back_populates='sensor',
             lazy=True)
     sensor_schedules: Mapped[list['SensorScheduleModel']] = relationship('SensorScheduleModel',
