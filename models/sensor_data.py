@@ -8,6 +8,6 @@ class SensorDataModel(db.Model):
     id: Mapped[int] = mapped_column(db.Integer, primary_key=True)
     sensor_id: Mapped[int] = mapped_column(db.Integer, db.ForeignKey('sensor.id'), nullable=False)
     value: Mapped[float] = mapped_column(db.Float, nullable=False)
-    timestamp: Mapped[db.DateTime] = mapped_column(db.DateTime, default=db.func.now())
+    timestamp: Mapped[db.DateTime] = mapped_column(db.DateTime, server_default=db.func.now())
 
     sensor: Mapped['SensorModel'] = relationship('SensorModel', back_populates='sensor_data')
