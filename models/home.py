@@ -1,8 +1,6 @@
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from db import db
-from models import UserModel
-from models.enums import RoleType
 
 # Home Model
 class HomeModel(db.Model):
@@ -16,7 +14,8 @@ class HomeModel(db.Model):
     zip_code: Mapped[str] = mapped_column(db.String(20), nullable=False)
 
     user_id: Mapped[int] = mapped_column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    owner: Mapped['UserModel'] = relationship('UserModel', back_populates='homes')
+    owner: Mapped["UserModel"] = relationship('UserModel', back_populates='homes')
+    rooms: Mapped[list["RoomModel"]] = relationship('RoomModel', back_populates='home', lazy=True)
 
     # Timestamp columns to keep track of creation and modification
     created_at: Mapped[db.DateTime] = mapped_column(db.DateTime, server_default=db.func.now())

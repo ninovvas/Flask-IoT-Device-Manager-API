@@ -1,6 +1,7 @@
 from flask import request
 from flask_restful import Resource
 from managers.auth import auth
+from managers.home import HomeManager
 from models.enums import RoleType
 from managers.device_manager import DeviceManager
 from schemas.request.home import HomeRequestSchema
@@ -23,3 +24,13 @@ class HomeListCreate(Resource):
         user = auth.current_user()
         DeviceManager.create_home(user,data)
         return {'message': 'Home created successfully'}, 201
+
+class HomeDetail(Resource):
+    @auth.login_required
+    @permission_required(RoleType.user)
+    def get(self, home_id):
+        #user_id = get_jwt_identity()
+        user = auth.current_user()
+        home = HomeManager.get_home(user,home_id)
+        return {"home": HomeResponseSchema().dump(home)}, 200
+
