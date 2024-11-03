@@ -2,6 +2,7 @@ from db import db
 
 from werkzeug.exceptions import NotFound
 from models import HomeModel, RoleType
+from managers.base import BaseManager
 
 class HomeManager:
 
@@ -12,25 +13,26 @@ class HomeManager:
         return db.session.execute(query).scalars().all()
 
     def create_home(user, data):
-        # ToDo: Only the current user can create a home
         data["user_id"] = user.id
         new_home = HomeModel(**data)
         db.session.add(new_home)
         db.session.flush()
 
     def get_home(user, home_id):
-        query = db.select(HomeModel)
+        #query = db.select(HomeModel)
 
-        home = db.session.execute(
-            query.filter_by(id=home_id)
-        ).scalar()
+        #home = db.session.execute(
+        #    query.filter_by(id=home_id)
+        #).scalar()
 
-        if not home:
-            raise NotFound(f"Home with id {home_id} does not exist")
+        #if not home:
+        #    raise NotFound(f"Home with id {home_id} does not exist")
 
-        if user.role.user == RoleType.user:
-            query = query.filter_by(id=home_id, user_id=user.id)
-        return db.session.execute(query).scalar()
+        #if user.role.user == RoleType.user:
+        #    query = query.filter_by(id=home_id, user_id=user.id)
+        #return db.session.execute(query).scalar()
+
+        return BaseManager.get_item(user=user, db_model=HomeModel, item_id=home_id, error_msg="Home")
 
     def update_home(user, home_id, data):
 

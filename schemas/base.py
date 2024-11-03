@@ -16,6 +16,7 @@ class BaseSensor(Schema):
 
 class BaseRoom(Schema):
     name = fields.String(required=True, validate=[validate.Length(min=3)])
-    description = fields.String()
+    description = fields.String(required=True)
+    home_id = fields.Integer(required=True)
 
 
