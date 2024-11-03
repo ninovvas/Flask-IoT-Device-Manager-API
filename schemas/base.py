@@ -21,3 +21,9 @@ class BaseRoom(Schema):
     home_id = fields.Integer(required=True)
 
 
+class BaseSensorData(Schema):
+    sensor_id = fields.Integer(required=True)
+    value = fields.Float(required=True)
+
+
+
