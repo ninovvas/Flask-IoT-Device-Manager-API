@@ -12,7 +12,8 @@ class BaseSensor(Schema):
     name = fields.String(required=True, validate=[validate.Length(min=3)])
     sensor_type = fields.String(required=True)
     producer = fields.String(required=True)
-    interface = fields.Integer(allow_none=True)
+    interface = fields.String(allow_none=True)
+    room_id = fields.Integer(required=True)
 
 class BaseRoom(Schema):
     name = fields.String(required=True, validate=[validate.Length(min=3)])

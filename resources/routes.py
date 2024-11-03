@@ -1,6 +1,7 @@
 from resources.auth import RegisterUser, LoginUser, LogoutUser
 from resources.home import HomeListCreate, HomeDetail
 from resources.room import RoomListCreate, RoomDetail
+from resources.sensor import SensorListCreate, SensorDetail
 
 routes = (
     (RegisterUser, "/register"),
@@ -9,5 +10,7 @@ routes = (
     (HomeListCreate, "/homes"),
     (HomeDetail, "/homes/<int:home_id>"),
     (RoomListCreate, '/rooms'),
-    (RoomDetail, '/rooms/<int:room_id>')
+    (RoomDetail, '/rooms/<int:room_id>'),
+    (SensorListCreate, '/sensors'),
+    (SensorDetail, '/sensors/<int:sensor_id>')
 )

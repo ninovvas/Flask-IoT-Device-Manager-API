@@ -7,17 +7,20 @@ from models import RoomModel, RoleType
 
 class RoomManager:
 
-    def get_rooms(self, user):
+    @staticmethod
+    def get_rooms(user):
         query = db.select(RoomModel)
         query = query.filter_by(user_id=user.id)
         return db.session.execute(query).scalars().all()
 
-    def create_room(self, user, data):
+    @staticmethod
+    def create_room(user, data):
         data["user_id"] = user.id
         new_room = RoomModel(**data)
         db.session.add(new_room)
         db.session.flush()
 
+    @staticmethod
     def get_room(user, room_id):
         """Get the detail information about the selected room
         :param user:
@@ -38,6 +41,7 @@ class RoomManager:
         #    query = query.filter_by(id=room_id, user_id=user.id)
         #return db.session.execute(query).scalar()
 
+    @staticmethod
     def update_room(user, room_id, data):
 
         room = db.session.execute(
@@ -52,13 +56,13 @@ class RoomManager:
 
         db.session.flush()
 
-
+    @staticmethod
     def delete_room(user, room_id):
         home = db.session.execute(
             db.select(RoomModel).filter_by(id=room_id, user_id=user.id)
         ).scalar()
         if not home:
-            raise NotFound(f"Home with id {room_id} does not exist")
+            raise NotFound(f"Room with id {room_id} does not exist")
 
         db.session.delete(home)
         db.session.flush()

@@ -15,7 +15,7 @@ class RoomListCreate(Resource):
     def get(self):
 
         user = auth.current_user()
-        rooms = RoomManager.get_rooms(user)
+        rooms = RoomManager.get_rooms()
         return {"homes": RoomResponseSchema().dump(rooms, many=True)}, 200
 
     @auth.login_required
@@ -25,7 +25,7 @@ class RoomListCreate(Resource):
 
         data = request.get_json()
         user = auth.current_user()
-        RoomManager.create_room(user, data)
+        RoomManager.create_room(data)
         return {'message': 'Room created successfully'}, 201
 
 
@@ -51,4 +51,4 @@ class RoomDetail(Resource):
     def delete(self, room_id):
         user = auth.current_user()
         RoomManager.delete_room(user,room_id)
-        return {'message': 'Home deleted successfully'}, 200
+        return {'message': 'Room deleted successfully'}, 200
