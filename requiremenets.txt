@@ -1,6 +1,7 @@
 Flask-SQLAlchemy==3.1.1
 Flask-Migrate==4.0.7
 Flask-RESTful==0.3.10
+Flask-Testing==0.8.1
 psycopg2-binary==2.9.10
 Flask-Cors==5.0.0
 python-decouple==3.8
@@ -8,3 +9,6 @@ Flask-HTTPAuth==4.8.0
 PyJWT==2.9.0
 marshmallow==3.23.0
 marshmallow-enum==1.5.1
+pytest== 8.3.3
+factory_boy==3.3.1
+
