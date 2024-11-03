@@ -17,15 +17,15 @@ class SensorDataManager:
         BaseManager.create_item(SensorDataModel, data)
 
     @staticmethod
-    def get_sensor_data(user, sensor_id):
-        return BaseManager.get_item(user=user, db_model=SensorDataModel, item_id=sensor_id, error_msg="Sensor Data")
+    def get_sensor_data(user, sensor_data_id):
+        return BaseManager.get_item(user=user, db_model=SensorDataModel, item_id=sensor_data_id, error_msg="Sensor Data")
 
     @staticmethod
-    def update_sensor_data(user, sensor_id, data):
+    def update_sensor_data(user, sensor_data_id, data):
 
-        BaseManager.update_item(user=user, db_model=SensorDataModel, item_id=sensor_id, data=data,
+        BaseManager.update_item(user=user, db_model=SensorDataModel, item_id=sensor_data_id, data=data,
             error_msg="Sensor Data")
 
     @staticmethod
-    def delete_sensor_data(user, sensor_id):
-        BaseManager.delete_item(user=user, db_model=SensorDataModel, item_id=sensor_id, error_msg="Sensor Data")
+    def delete_sensor_data(user, sensor_data_id):
+        BaseManager.delete_item(user=user, db_model=SensorDataModel, item_id=sensor_data_id, error_msg="Sensor Data")

@@ -12,4 +12,5 @@ class SensorScheduleModel(db.Model):
     end_time: Mapped[db.DateTime] = mapped_column(db.DateTime, nullable=False)
     action: Mapped[str] = mapped_column(db.String(50), nullable=False)
 
+    user_id: Mapped[int] = mapped_column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     sensor: Mapped['SensorModel'] = relationship('SensorModel', back_populates='sensor_schedules', lazy='joined')
