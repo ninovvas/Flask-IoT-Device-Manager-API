@@ -12,4 +12,5 @@ class SensorStatisticModel(db.Model):
     max_value: Mapped[float] = mapped_column(db.Float, nullable=False)
     timestamp: Mapped[db.DateTime] = mapped_column(db.DateTime, server_default=db.func.now())
 
+    user_id: Mapped[int] = mapped_column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     sensor: Mapped['SensorModel'] = relationship('SensorModel', back_populates='sensor_statistics')

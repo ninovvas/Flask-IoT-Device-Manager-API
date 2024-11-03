@@ -34,23 +34,23 @@ class SensorScheduleListCreate(Resource):
 class SensorScheduleDetail(Resource):
     @auth.login_required
     @permission_required(RoleType.user)
-    def get(self, sensor_data_id):
+    def get(self, sensor_schedule_id):
         user = auth.current_user()
-        room = SensorScheduleManager.get_sensor_schedule(user, sensor_data_id)
+        room = SensorScheduleManager.get_sensor_schedule(user, sensor_schedule_id)
         return {"sensor_schedule": SensorScheduleResponseSchema().dump(room)}, 200
 
     @auth.login_required
     @permission_required(RoleType.user)
     @validate_schema(SensorScheduleRequestSchema)
-    def put(self, sensor_data_id):
+    def put(self, sensor_schedule_id):
         user = auth.current_user()
         data = request.get_json()
-        SensorScheduleManager.update_sensor_schedule(user,sensor_data_id,data)
+        SensorScheduleManager.update_sensor_schedule(user,sensor_schedule_id,data)
         return {'message': 'Sensor Schedule updated successfully'}, 200
 
     @auth.login_required
     @permission_required(RoleType.user)
-    def delete(self, sensor_data_id):
+    def delete(self, sensor_schedule_id):
         user = auth.current_user()
-        SensorScheduleManager.delete_sensor_schedule(user,sensor_data_id)
+        SensorScheduleManager.delete_sensor_schedule(user,sensor_schedule_id)
         return {'message': 'Sensor Schedule deleted successfully'}, 200

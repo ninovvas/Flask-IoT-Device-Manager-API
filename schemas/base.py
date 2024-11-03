@@ -32,5 +32,12 @@ class BaseSensorSchedule(Schema):
     end_time = fields.DateTime(required=True, format='%Y-%m-%dT%H:%M:%S')
     action = fields.String(required=True, validate=[validate.Length(min=3)])
 
+class BaseSensorStatistic(Schema):
+    sensor_id = fields.Integer(required=True)
+    average_value = fields.Float(required=True)
+    min_value = fields.Float(required=True)
+    max_value = fields.Float(required=True)
+
+
 
 
