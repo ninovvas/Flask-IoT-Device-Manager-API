@@ -24,7 +24,7 @@ class APIBaseTestCase(TestCase):
     def register_user(self) -> tuple[str, str]:
         data = {
             "username": "test",
-            "password": "Test1234",
+            "password": "Test@1234",
             "first_name": "First_Name_Test",
             "last_name": "Last_Name_Test",
             "email": "test@abv.bg",

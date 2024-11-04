@@ -23,9 +23,21 @@ class UserFactory(BaseFactory):
         model = UserModel
 
     id = factory.Sequence(lambda n: n)
-    username = factory.Faker("username")
+    username = "username"
     first_name = factory.Faker("first_name")
     last_name = factory.Faker("last_name")
     email = factory.Faker("email")
     password = factory.Faker("password")
     role = RoleType.user
+
+class UserFactoryAdmin(BaseFactory):
+    class Meta:
+        model = UserModel
+
+    id = factory.Sequence(lambda n: n)
+    username = "admin"
+    first_name = factory.Faker("first_name")
+    last_name = factory.Faker("last_name")
+    email = factory.Faker("email")
+    password = factory.Faker("password")
+    role = RoleType.admin

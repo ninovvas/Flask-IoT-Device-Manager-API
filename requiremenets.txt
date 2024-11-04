@@ -9,6 +9,6 @@ Flask-HTTPAuth==4.8.0
 PyJWT==2.9.0
 marshmallow==3.23.0
 marshmallow-enum==1.5.1
-pytest== 8.3.3
+pytest==8.3.3
 factory_boy==3.3.1
 

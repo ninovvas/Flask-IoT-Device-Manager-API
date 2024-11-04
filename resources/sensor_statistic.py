@@ -13,6 +13,7 @@ from util.decorators import permission_required, validate_schema
 
 class SensorStatisticListCreate(Resource):
     @auth.login_required
+    @permission_required(RoleType.user)
     def get(self):
 
         user = auth.current_user()
