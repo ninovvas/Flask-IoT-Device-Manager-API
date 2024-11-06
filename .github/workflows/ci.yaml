@@ -51,4 +51,8 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           export PGPASSWORD="test@123"
+          export SENDGRID_API_KEY="test"
+          export FROM_EMAIL="test@abv.bg"
+          export TO_EMAIL="test_to_email@abv.bg"
+          export SENDGRID_TEMPLATE_ID="1234"
           pytest
