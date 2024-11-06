@@ -1,7 +1,15 @@
 from werkzeug.exceptions import NotFound
-
+from decouple import config
 from managers.base import BaseManager
-from models import SensorDataModel
+from models import SensorDataModel, SensorModel
+from services.maileroo import MailerooService
+from services.sarbacane import SarbacaneService
+from services.sendgrid import SendGridService
+
+grid_service = SendGridService()
+maileroo_service = MailerooService()
+sarbacane_service = SarbacaneService()
+NOTIFY_VALUE = 50
 
 
 class SensorDataManager:
@@ -12,7 +20,22 @@ class SensorDataManager:
 
     @staticmethod
     def create_sensor_data(user, data):
+
         data["user_id"] = user.id
+
+        email_data = {}
+        # get sensor name for the name
+        email_data["value"] = data.get("value")
+        sensor_id = data.get('sensor_id')
+        sensor = BaseManager.check_item_exists(user, SensorModel, sensor_id)
+        email_data["sensor_name"] = sensor.name
+
+        if config("ENABLE_SENDGRID") == "True":
+            # Send email if the sensor value is bigger or equal to NOTIFY_VALUE
+            grid_service.notify_sensor_data_threshold(email_data, NOTIFY_VALUE)
+        if config("ENABLE_MAILEROO_SERVICE") == "True":
+            maileroo_service.notify_sensor_data_threshold(email_data, NOTIFY_VALUE)
+
 
         BaseManager.create_item(SensorDataModel, data)
 

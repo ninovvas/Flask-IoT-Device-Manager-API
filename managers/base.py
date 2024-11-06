@@ -89,7 +89,7 @@ class BaseManager:
         db.session.flush()
 
     @staticmethod
-    def check_item_exists(user, db_model, item_id,):
+    def check_item_exists(user, db_model, item_id):
         item = db.session.execute(
             db.select(db_model).filter_by(id=item_id, user_id=user.id)
         ).scalar()
