@@ -55,4 +55,7 @@ jobs:
           export FROM_EMAIL="test@abv.bg"
           export TO_EMAIL="test_to_email@abv.bg"
           export SENDGRID_TEMPLATE_ID="1234"
+          export ENABLE_SENDGRID="zrnfhzrmd"
+          export ENABLE_MAILEROO_SERVICE="False"
+          export MAILERSEND_API_KEY="kdknfdnfgmfng"
           pytest
