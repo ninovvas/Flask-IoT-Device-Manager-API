@@ -14,8 +14,8 @@ jobs:
         image: postgres:15.0
         env:
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: ines123
-          POSTGRES_DB: complaintSystemStorageTesting
+          POSTGRES_PASSWORD: postgres1234
+          POSTGRES_DB: iot_device_manager_testing
         ports:
           - 5432:5432
         # Needed because the postgres container does not provide a healthcheck
@@ -30,9 +30,9 @@ jobs:
       - name: Install dependencies and test
         env:
           DB_USER: postgres
-          DB_PASSWORD: ines123
+          DB_PASSWORD: postgres1234
           DB_PORT: '5432'
-          DB_NAME: complaintSystemStorageTesting
+          DB_NAME: iot_device_manager_testing
           TEST_DB_USER: "postgres"
           TEST_DB_PASSWORD: "postgres1234"
           TEST_DB_PORT: 5432
