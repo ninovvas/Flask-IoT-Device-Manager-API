@@ -12,3 +12,4 @@ marshmallow-enum==1.5.1
 pytest==8.3.3
 factory_boy==3.3.1
 sendgrid==6.11.0
+requests==2.32.3
