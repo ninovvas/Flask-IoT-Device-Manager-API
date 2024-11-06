@@ -1,15 +1,14 @@
 from flask import request
 from flask_restful import Resource
+from sqlalchemy import func
+
 from managers.auth import auth
 from managers.sensor_schedule import SensorScheduleManager
 from models import RoleType
-
-
-from sqlalchemy import func
-
 from schemas.request.sensor_schedule import SensorScheduleRequestSchema
 from schemas.response.sensor_schedule import SensorScheduleResponseSchema
 from util.decorators import permission_required, validate_schema
+
 
 class SensorScheduleListCreate(Resource):
     @auth.login_required

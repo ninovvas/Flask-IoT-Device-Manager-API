@@ -5,7 +5,6 @@ from werkzeug.exceptions import Forbidden, BadRequest
 from managers.auth import auth
 
 
-
 def permission_required(required_role):
     def decorator(func):
         def wrapper(*args, **kwargs):

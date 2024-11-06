@@ -1,15 +1,13 @@
 from flask import request
 from flask_restful import Resource
+
 from managers.auth import auth
 from managers.sensor_statistic import SensorStatisticManager
 from models import RoleType
-
-
-from sqlalchemy import func
-
 from schemas.request.sensor_statistic import SensorStatisticRequestSchema
 from schemas.response.sensor_statistic import SensorStatisticResponseSchema
 from util.decorators import permission_required, validate_schema
+
 
 class SensorStatisticListCreate(Resource):
     @auth.login_required

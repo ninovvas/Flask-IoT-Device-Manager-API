@@ -3,6 +3,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from db import db
 from models.enums import RoleType
 
+
 # User Model
 class UserModel(db.Model):
     __tablename__ = 'users'

@@ -1,9 +1,9 @@
 from flask import request
 from flask_restful import Resource
+
 from managers.auth import auth
 from managers.home import HomeManager
 from models.enums import RoleType
-from managers.device_manager import DeviceManager
 from schemas.request.home import HomeRequestSchema
 from schemas.response.home import HomeResponseSchema
 from util.decorators import permission_required, validate_schema

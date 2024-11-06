@@ -2,6 +2,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from db import db
 
+
 # Sensor Statistic Model
 class SensorStatisticModel(db.Model):
     __tablename__ = 'sensor_statistic'

@@ -2,7 +2,7 @@ from werkzeug.exceptions import NotFound
 
 from db import db
 from managers.base import BaseManager
-from models import RoomModel, RoleType
+from models import RoomModel
 
 
 class RoomManager:

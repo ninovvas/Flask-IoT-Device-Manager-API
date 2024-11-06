@@ -2,6 +2,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from db import db
 
+
 # Room Model
 class RoomModel(db.Model):
     __tablename__ = 'room'

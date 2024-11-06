@@ -1,15 +1,12 @@
 from flask import request
 from flask_restful import Resource
+from marshmallow import ValidationError
 from werkzeug.exceptions import Unauthorized
 
 from managers.auth import auth
 from managers.device_manager import DeviceManager
-
-from marshmallow import ValidationError
-
 from models import UserModel
 from schemas.request.user import UserRegisterSchema, UserLoginSchema
-
 from util.decorators import validate_schema
 
 

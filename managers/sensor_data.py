@@ -1,14 +1,12 @@
-from werkzeug.exceptions import NotFound
 from decouple import config
+
 from managers.base import BaseManager
 from models import SensorDataModel, SensorModel
 from services.maileroo import MailerooService
-from services.sarbacane import SarbacaneService
 from services.sendgrid import SendGridService
 
 grid_service = SendGridService()
 maileroo_service = MailerooService()
-sarbacane_service = SarbacaneService()
 NOTIFY_VALUE = 50
 
 

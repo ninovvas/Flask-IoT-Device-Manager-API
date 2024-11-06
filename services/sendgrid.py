@@ -1,7 +1,7 @@
 from decouple import config
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
-import os
+
 
 class SendGridService:
 

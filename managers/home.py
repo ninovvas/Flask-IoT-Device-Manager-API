@@ -1,8 +1,9 @@
-from db import db
-
 from werkzeug.exceptions import NotFound
-from models import HomeModel, RoleType
+
+from db import db
 from managers.base import BaseManager
+from models import HomeModel, RoleType
+
 
 class HomeManager:
 

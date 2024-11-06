@@ -1,8 +1,8 @@
+from flask_testing import TestCase
+
 from config import create_app
 from db import db
 from managers.auth import AuthManager
-from flask_testing import TestCase
-
 from models import UserModel
 
 

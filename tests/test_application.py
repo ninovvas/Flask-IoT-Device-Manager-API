@@ -2,7 +2,7 @@
 from models import UserModel
 #from models import RoleType, UserModel
 from tests.base import APIBaseTestCase, generate_token
-from tests.factories import UserFactory, UserFactoryAdmin
+from tests.factories import UserFactoryAdmin
 
 
 class TestProtectedEndpoints(APIBaseTestCase):

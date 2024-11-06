@@ -1,8 +1,7 @@
-from gevent.pool import pass_value
 from werkzeug.exceptions import NotFound
 
 from db import db
-from models import RoleType, SensorDataModel
+from models import RoleType
 
 
 class BaseManager:

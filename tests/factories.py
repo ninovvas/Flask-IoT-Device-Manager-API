@@ -1,10 +1,9 @@
-from random import randint
-
 import factory
+from werkzeug.security import generate_password_hash
 
 from db import db
 from models import UserModel, RoleType
-from werkzeug.security import generate_password_hash, check_password_hash
+
 
 class BaseFactory(factory.Factory):
     @classmethod

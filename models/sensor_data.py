@@ -1,7 +1,8 @@
-from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import func
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from db import db
+
 
 # Sensor Data Model
 class SensorDataModel(db.Model):

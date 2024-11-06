@@ -1,7 +1,7 @@
 
 from tests.base import APIBaseTestCase, generate_token
 from tests.factories import UserFactory
-from db import db
+
 
 class TestHomeResource(APIBaseTestCase):
 

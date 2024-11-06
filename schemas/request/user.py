@@ -1,7 +1,9 @@
 
 import re
+
 from marshmallow import Schema, fields, validate, validates, validates_schema, ValidationError
 from marshmallow.validate import OneOf
+
 
 class UserSchema(Schema):
     username = fields.String(required=True, validate=[validate.Length(min=3)])

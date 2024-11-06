@@ -1,4 +1,5 @@
 from marshmallow import fields
+
 from schemas.base import BaseRoom
 from schemas.response.sensor import SensorResponseSchema
 

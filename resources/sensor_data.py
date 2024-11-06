@@ -1,14 +1,14 @@
 from flask import request
 from flask_restful import Resource
+from sqlalchemy import func
+
 from managers.auth import auth
 from managers.sensor_data import SensorDataManager
 from models import RoleType
 from schemas.request.sensor_data import SensorDataRequestSchema
 from schemas.response.sensor_data import SensorDataResponseSchema
-
-from sqlalchemy import func
-
 from util.decorators import permission_required, validate_schema
+
 
 class SensorDataListCreate(Resource):
     @auth.login_required

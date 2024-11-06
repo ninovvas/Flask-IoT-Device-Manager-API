@@ -1,12 +1,10 @@
 
-from db import db
-from models import RoleType, UserModel, HomeModel
-from managers.auth import AuthManager
-
-from flask import request, jsonify
-
-from werkzeug.exceptions import Unauthorized, NotFound
+from werkzeug.exceptions import Unauthorized
 from werkzeug.security import generate_password_hash, check_password_hash
+
+from db import db
+from managers.auth import AuthManager
+from models import RoleType, UserModel
 
 
 class DeviceManager:

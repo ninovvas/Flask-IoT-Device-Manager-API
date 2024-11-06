@@ -2,6 +2,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from db import db
 
+
 # Sensor Schedule Model
 class SensorScheduleModel(db.Model):
     __tablename__ = 'sensor_schedule'
