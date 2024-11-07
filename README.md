@@ -1,156 +1,255 @@
 
 # Flask IoT Device Manager
 
-A Flask-based application for managing IoT devices within rooms, supporting CRUD operations for users, rooms, sensors, and authentication.
+A RESTful API for managing IoT devices, sensors, homes, rooms, and their associated data. This API allows you to register and authenticate users, manage sensor data, and track statistics over time.
 
-## Project Structure
-- **app.py**: Initializes the Flask app and database connection.
-- **config.py**: Manages configuration settings.
-- **db.py**: Database initialization and session handling.
-- **managers/**: Contains the main logic for handling CRUD operations on devices, rooms, and sensors.
-- **models/**: Defines the ORM models for database tables.
-- **requirements.txt**: Lists dependencies for the project.
+## Installation
 
-## Getting Started
-
-### Prerequisites
-- Python 3.8+
-- PostgreSQL or any compatible SQL database
-
-### Installation
-
-1. **Clone the repository:**
+1. **Clone the Repository**
    ```bash
-   git clone https://github.com/yourusername/flask_iot_device_manager.git
+   git clone <repository-url>
    cd flask_iot_device_manager
    ```
 
-2. **Install dependencies:**
+2. **Install Dependencies**
+   Ensure you have Python installed. Then, install the required packages:
    ```bash
    pip install -r requirements.txt
    ```
 
-3. **Set up environment variables:**
-   Create a `.env` file in the project root with the following:
-   ```plaintext
-   CONFIG_ENV=development
-   DATABASE_URL=your_database_url
-   SECRET_KEY=your_secret_key
+3. **Configure the Application**
+   Modify the `config.py` file if necessary to adjust for your database or environment settings.
+
+4. **Initialize the Database**
+   ```bash
+   python db.py
    ```
 
-4. **Initialize the database:**
+5. **Run the Application**
    ```bash
-   flask db init
-   flask db migrate
-   flask db upgrade
+   python app.py
    ```
 
-5. **Run the application:**
-   ```bash
-   flask run
-   ```
-   The app will be available at `http://127.0.0.1:5000/`.
+   The application should now be running at `http://127.0.0.1:5000`.
+
+## Project Structure
+
+- **app.py**: Entry point for the Flask application.
+- **config.py**: Configuration settings (e.g., database URI).
+- **db.py**: Handles database initialization and migrations.
+- **requirements.txt**: List of dependencies.
+- **managers**: Contains various managers for handling business logic related to authentication, devices, homes, rooms, sensors, sensor data, schedules, statistics, and users.
 
 ## API Endpoints
 
 ### Authentication
-1. **Login**  
-   - **Endpoint**: `POST /auth/login`
-   - **Body**: `{ "username": "user", "password": "pass" }`
-   - **Response**: `{ "token": "JWT_TOKEN" }`
 
-2. **Logout**  
-   - **Endpoint**: `POST /auth/logout`
-   - **Response**: `Successfully logged out`
+#### Register a New User
+- **Endpoint**: `POST /register`
+- **Example Request**:
+  ```json
+  {
+      "username": "new_user",
+      "password": "password123"
+  }
+  ```
+- **Response**:
+  ```json
+  {
+      "message": "User registered successfully"
+  }
+  ```
+
+#### Login
+- **Endpoint**: `POST /login`
+- **Example Request**:
+  ```json
+  {
+      "username": "new_user",
+      "password": "password123"
+  }
+  ```
+- **Response**:
+  ```json
+  {
+      "access_token": "<JWT_TOKEN>"
+  }
+  ```
+
+#### Logout
+- **Endpoint**: `POST /logout`
+- **Example Request**:
+  ```json
+  {}
+  ```
+- **Response**:
+  ```json
+  {
+      "message": "Successfully logged out"
+  }
+  ```
+
+### Homes
+
+#### Create a New Home
+- **Endpoint**: `POST /homes`
+- **Example Request**:
+  ```json
+  {
+      "address": "123 IoT Street",
+      "city": "Techville",
+      "state": "CA",
+      "zip_code": "94000"
+  }
+  ```
+- **Response**:
+  ```json
+  {
+      "id": 1,
+      "address": "123 IoT Street",
+      "city": "Techville",
+      "state": "CA",
+      "zip_code": "94000"
+  }
+  ```
+
+#### Get All Homes
+- **Endpoint**: `GET /homes`
+- **Response**:
+  ```json
+  [
+      {
+          "id": 1,
+          "address": "123 IoT Street",
+          "city": "Techville",
+          "state": "CA",
+          "zip_code": "94000"
+      }
+  ]
+  ```
+
+#### Get a Specific Home
+- **Endpoint**: `GET /homes/<home_id>`
+- **Example**: `GET /homes/1`
+- **Response**:
+  ```json
+  {
+      "id": 1,
+      "address": "123 IoT Street",
+      "city": "Techville",
+      "state": "CA",
+      "zip_code": "94000"
+  }
+  ```
+
+#### Update a Home
+- **Endpoint**: `PUT /homes/<home_id>`
+- **Example**: `PUT /homes/2`
+- **Request**:
+  ```json
+  {
+      "address": "456 Smart Lane",
+      "city": "Techville",
+      "state": "CA",
+      "zip_code": "94001"
+  }
+  ```
+- **Response**:
+  ```json
+  {
+      "id": 2,
+      "address": "456 Smart Lane",
+      "city": "Techville",
+      "state": "CA",
+      "zip_code": "94001"
+  }
+  ```
+
+#### Delete a Home
+- **Endpoint**: `DELETE /homes/<home_id>`
+- **Example**: `DELETE /homes/10`
+- **Response**:
+  ```json
+  {
+      "message": "Home deleted successfully"
+  }
+  ```
 
 ### Rooms
 
-1. **Get All Rooms**
-   - **Endpoint**: `GET /rooms`
-   - **Headers**: `Authorization: Bearer <JWT_TOKEN>`
-   - **Response**: List of all rooms associated with the user.
+#### Create a New Room
+- **Endpoint**: `POST /rooms`
+- **Example Request**:
+  ```json
+  {
+      "name": "Living Room",
+      "description": "Main living area",
+      "home_id": 1
+  }
+  ```
+- **Response**:
+  ```json
+  {
+      "id": 1,
+      "name": "Living Room",
+      "description": "Main living area",
+      "home_id": 1
+  }
+  ```
 
-2. **Create Room**
-   - **Endpoint**: `POST /rooms`
-   - **Headers**: `Authorization: Bearer <JWT_TOKEN>`
-   - **Body**:
-     ```json
-     {
-       "name": "Living Room",
-       "description": "Main room",
-       "home_id": 1
-     }
-     ```
-   - **Response**: Created room object.
+#### Get All Rooms
+- **Endpoint**: `GET /rooms`
+- **Response**:
+  ```json
+  [
+      {
+          "id": 1,
+          "name": "Living Room",
+          "description": "Main living area",
+          "home_id": 1
+      }
+  ]
+  ```
 
-3. **Get Room by ID**
-   - **Endpoint**: `GET /rooms/{room_id}`
-   - **Headers**: `Authorization: Bearer <JWT_TOKEN>`
-   - **Response**: Details of the specified room.
+#### Get a Specific Room
+- **Endpoint**: `GET /rooms/<room_id>`
+- **Example**: `GET /rooms/1`
+- **Response**:
+  ```json
+  {
+      "id": 1,
+      "name": "Living Room",
+      "description": "Main living area",
+      "home_id": 1
+  }
+  ```
 
-4. **Update Room**
-   - **Endpoint**: `PUT /rooms/{room_id}`
-   - **Headers**: `Authorization: Bearer <JWT_TOKEN>`
-   - **Body**:
-     ```json
-     {
-       "name": "Updated Living Room",
-       "description": "Updated description",
-       "home_id": 1
-     }
-     ```
-   - **Response**: Updated room object.
+#### Update a Room
+- **Endpoint**: `PUT /rooms/<room_id>`
+- **Example**: `PUT /rooms/room_id`
+- **Request**:
+  ```json
+  {
+      "name": "Updated Room",
+      "description": "Updated description"
+  }
+  ```
+- **Response**:
+  ```json
+  {
+      "id": "room_id",
+      "name": "Updated Room",
+      "description": "Updated description",
+      "home_id": 1
+  }
+  ```
 
-5. **Delete Room**
-   - **Endpoint**: `DELETE /rooms/{room_id}`
-   - **Headers**: `Authorization: Bearer <JWT_TOKEN>`
-   - **Response**: Confirmation message for successful deletion.
-
-### Sensors
-
-1. **Get All Sensors**
-   - **Endpoint**: `GET /sensors`
-   - **Headers**: `Authorization: Bearer <JWT_TOKEN>`
-   - **Response**: List of all sensors associated with the user.
-
-2. **Create Sensor**
-   - **Endpoint**: `POST /sensors`
-   - **Headers**: `Authorization: Bearer <JWT_TOKEN>`
-   - **Body**:
-     ```json
-     {
-       "name": "Temperature Sensor",
-       "room_id": 1,
-       "type": "Temperature"
-     }
-     ```
-   - **Response**: Created sensor object.
-
-3. **Get Sensor by ID**
-   - **Endpoint**: `GET /sensors/{sensor_id}`
-   - **Headers**: `Authorization: Bearer <JWT_TOKEN>`
-   - **Response**: Details of the specified sensor.
-
-4. **Update Sensor**
-   - **Endpoint**: `PUT /sensors/{sensor_id}`
-   - **Headers**: `Authorization: Bearer <JWT_TOKEN>`
-   - **Body**:
-     ```json
-     {
-       "name": "Updated Temperature Sensor",
-       "room_id": 2,
-       "type": "Temperature"
-     }
-     ```
-   - **Response**: Updated sensor object.
-
-5. **Delete Sensor**
-   - **Endpoint**: `DELETE /sensors/{sensor_id}`
-   - **Headers**: `Authorization: Bearer <JWT_TOKEN>`
-   - **Response**: Confirmation message for successful deletion.
-
-## Additional Notes
-
-- All endpoints require a valid JWT token obtained via the login endpoint.
-- Use the `SECRET_KEY` in your `.env` file to securely sign and verify JWT tokens.
-- The `RoomManager` and `SensorManager` classes provide methods for creating, retrieving, updating, and deleting entries in the database.
+#### Delete a Room
+- **Endpoint**: `DELETE /rooms/<room_id>`
+- **Example**: `DELETE /rooms/room_id`
+- **Response**:
+  ```json
+  {
+      "message": "Room deleted successfully"
+  }
+  ```
