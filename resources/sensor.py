@@ -35,8 +35,8 @@ class SensorDetail(Resource):
     @permission_required(RoleType.user)
     def get(self, sensor_id):
         user = auth.current_user()
-        room = SensorManager.get_sensor(user, sensor_id)
-        return {"sensor": SensorResponseSchema().dump(room)}, 200
+        sensor = SensorManager.get_sensor(user, sensor_id)
+        return {"sensor": SensorResponseSchema().dump(sensor)}, 200
 
     @auth.login_required
     @permission_required(RoleType.user)

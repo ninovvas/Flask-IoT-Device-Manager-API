@@ -39,6 +39,7 @@ class BaseManager:
 
         if user.role.user == RoleType.user:
             query = query.filter_by(id=item_id, user_id=user.id)
+
         return db.session.execute(query).scalar()
 
     @staticmethod

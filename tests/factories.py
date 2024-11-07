@@ -1,10 +1,10 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 
 import factory
 from werkzeug.security import generate_password_hash
 
 from db import db
-from models import UserModel, RoleType, HomeModel, RoomModel, SensorModel, SensorDataModel
+from models import UserModel, RoleType, HomeModel, RoomModel, SensorModel, SensorDataModel, SensorScheduleModel
 
 
 class BaseFactory(factory.Factory):
@@ -94,4 +94,15 @@ class SensorDataFactory(BaseFactory):
     sensor_id = factory.SubFactory(SensorFactory)
     value = factory.Sequence(lambda n: 1.0 * n)
     timestamp = datetime.now()
+    user_id = factory.SubFactory(UserFactory)
+
+class SensorScheduleFactory(BaseFactory):
+    class Meta:
+        model = SensorScheduleModel
+
+    name = factory.Faker("name")
+    sensor_id = factory.SubFactory(SensorFactory)
+    start_time = datetime.now().strftime('%Y-%m-%dT%H:%M:%S')
+    end_time = (datetime.now() + timedelta(hours=2)).strftime('%Y-%m-%dT%H:%M:%S')
+    action  = "start"
     user_id = factory.SubFactory(UserFactory)

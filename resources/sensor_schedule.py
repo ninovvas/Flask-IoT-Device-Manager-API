@@ -26,7 +26,7 @@ class SensorScheduleListCreate(Resource):
 
         data = request.get_json()
         user = auth.current_user()
-        data.setdefault('timestamp', func.now())
+        #data.setdefault('timestamp', func.now())
         SensorScheduleManager.create_sensor_schedule(user, data)
         return {'message': 'Sensor Schedule created successfully'}, 201
 
@@ -36,8 +36,8 @@ class SensorScheduleDetail(Resource):
     @permission_required(RoleType.user)
     def get(self, sensor_schedule_id):
         user = auth.current_user()
-        room = SensorScheduleManager.get_sensor_schedule(user, sensor_schedule_id)
-        return {"sensor_schedule": SensorScheduleResponseSchema().dump(room)}, 200
+        schedule = SensorScheduleManager.get_sensor_schedule(user, sensor_schedule_id)
+        return {"sensor_schedule": SensorScheduleResponseSchema().dump(schedule)}, 200
 
     @auth.login_required
     @permission_required(RoleType.user)
