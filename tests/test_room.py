@@ -17,7 +17,7 @@ class TestRoomResource(APIBaseTestCase):
         data = {
             "name": "Test Room",
             "description": "A room for testing purposes.",
-            "home_id": home.id
+            "home_id": home.id,
         }
 
         response = self.client.post(
@@ -71,7 +71,7 @@ class TestRoomResource(APIBaseTestCase):
         edit_data = {
             "name": "Updated Room",
             "description": "Updated description.",
-            "home_id": 1
+            "home_id": 1,
         }
         response_edit = self.client.put(
             f"/rooms/{room.id}",
@@ -95,15 +95,9 @@ class TestRoomResource(APIBaseTestCase):
         room = RoomFactory(user_id=user.id, home_id=home.id)
 
         # Delete the room
-        response = self.client.delete(
-            f"/rooms/{room.id}",
-            headers=headers
-        )
+        response = self.client.delete(f"/rooms/{room.id}", headers=headers)
         self.assertEqual(response.status_code, 200)
 
         # Verify deletion
-        get_response = self.client.get(
-            f"/rooms/1",
-            headers=headers
-        )
+        get_response = self.client.get(f"/rooms/1", headers=headers)
         self.assertEqual(get_response.status_code, 404)

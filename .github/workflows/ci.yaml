@@ -27,7 +27,17 @@ jobs:
         with:
           python-version: "3.9"
 
-      - name: Install dependencies and test
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Black for code formatting
+        run: |
+          black --check .
+        # Run Black in check mode to confirm compliance without modifying files
+
+      - name: Run tests
         env:
           DB_USER: postgres
           DB_PASSWORD: postgres1234
@@ -48,8 +58,6 @@ jobs:
           WISE_PROFILE_ID: ""
           EMAIL_SENDER: ""
         run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
           export PGPASSWORD="test@123"
           export SENDGRID_API_KEY="test"
           export FROM_EMAIL="test@abv.bg"

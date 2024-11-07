@@ -1,7 +1,14 @@
 from datetime import datetime, timedelta
 
 from tests.base import APIBaseTestCase, generate_token
-from tests.factories import UserFactory, HomeFactory, RoomFactory, SensorFactory, SensorScheduleFactory
+from tests.factories import (
+    UserFactory,
+    HomeFactory,
+    RoomFactory,
+    SensorFactory,
+    SensorScheduleFactory,
+)
+
 
 class TestSensorScheduleResource(APIBaseTestCase):
     def test_create_sensor_schedule(self):
@@ -18,8 +25,10 @@ class TestSensorScheduleResource(APIBaseTestCase):
         data = {
             "sensor_id": sensor.id,
             "name": "Stop sensor",
-            "start_time": datetime.now().strftime('%Y-%m-%dT%H:%M:%S'),
-            "end_time": (datetime.now() + timedelta(hours=2)).strftime('%Y-%m-%dT%H:%M:%S'),
+            "start_time": datetime.now().strftime("%Y-%m-%dT%H:%M:%S"),
+            "end_time": (datetime.now() + timedelta(hours=2)).strftime(
+                "%Y-%m-%dT%H:%M:%S"
+            ),
             "action": "stop",
         }
 
@@ -47,8 +56,10 @@ class TestSensorScheduleResource(APIBaseTestCase):
         edit_data = {
             "sensor_id": sensor.id,
             "name": "Start sensor",
-            "start_time": datetime.now().strftime('%Y-%m-%dT%H:%M:%S'),
-            "end_time": (datetime.now() + timedelta(hours=2)).strftime('%Y-%m-%dT%H:%M:%S'),
+            "start_time": datetime.now().strftime("%Y-%m-%dT%H:%M:%S"),
+            "end_time": (datetime.now() + timedelta(hours=2)).strftime(
+                "%Y-%m-%dT%H:%M:%S"
+            ),
             "action": "start",
         }
         response_edit = self.client.put(
@@ -73,14 +84,12 @@ class TestSensorScheduleResource(APIBaseTestCase):
 
         # Delete the sensor schedule
         response = self.client.delete(
-            f"/schedules/{sensor_schedule.id}",
-            headers=headers
+            f"/schedules/{sensor_schedule.id}", headers=headers
         )
         self.assertEqual(response.status_code, 200)
 
         # Verify deletion
         get_response = self.client.get(
-            f"/schedules/{sensor_schedule.id}",
-            headers=headers
+            f"/schedules/{sensor_schedule.id}", headers=headers
         )
         self.assertEqual(get_response.status_code, 404)

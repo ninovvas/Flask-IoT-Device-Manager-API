@@ -27,7 +27,9 @@ class RoomManager:
         :param room_id: the ID of the room
         :return:
         """
-        return BaseManager.get_item(user=user, db_model=RoomModel, item_id=room_id, error_msg="Room")
+        return BaseManager.get_item(
+            user=user, db_model=RoomModel, item_id=room_id, error_msg="Room"
+        )
 
     @staticmethod
     def update_room(user, room_id, data):

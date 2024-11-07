@@ -1,6 +1,7 @@
 from tests.base import APIBaseTestCase, generate_token
 from tests.factories import UserFactory, HomeFactory, RoomFactory, SensorFactory
 
+
 class TestSensorResource(APIBaseTestCase):
     def test_create_sensor(self):
 
@@ -18,7 +19,7 @@ class TestSensorResource(APIBaseTestCase):
             "sensor_type": "temperature",
             "producer": "Siemens",
             "interface": "I2C",
-            "room_id": room.id
+            "room_id": room.id,
         }
 
         response = self.client.post(
@@ -72,7 +73,7 @@ class TestSensorResource(APIBaseTestCase):
             "sensor_type": "temperature",
             "producer": "Siemens",
             "interface": "I2C",
-            "room_id": room.id
+            "room_id": room.id,
         }
         response_edit = self.client.put(
             f"/sensors/{sensor.id}",
@@ -94,15 +95,9 @@ class TestSensorResource(APIBaseTestCase):
         sensor = SensorFactory(user_id=user.id, room_id=room.id)
 
         # Delete the sensor
-        response = self.client.delete(
-            f"/sensors/{sensor.id}",
-            headers=headers
-        )
+        response = self.client.delete(f"/sensors/{sensor.id}", headers=headers)
         self.assertEqual(response.status_code, 200)
 
         # Verify deletion
-        get_response = self.client.get(
-            f"/sensors/{sensor.id}",
-            headers=headers
-        )
+        get_response = self.client.get(f"/sensors/{sensor.id}", headers=headers)
         self.assertEqual(get_response.status_code, 404)

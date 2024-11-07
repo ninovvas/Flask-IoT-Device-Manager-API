@@ -1,4 +1,3 @@
-
 from werkzeug.exceptions import Unauthorized
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -16,13 +15,15 @@ class DeviceManager:
         :param data:
         :return:
         """
-        #user = db.session.execute(
+        # user = db.session.execute(
         #    db.select(UserModel).filter_by(email=data["email"])
-        #).scalar()
+        # ).scalar()
         user = db.session.execute(
-
-            db.select(UserModel).filter((UserModel.username == data.get('username')) |
-                                        (UserModel.email == data.get('email')))).scalar()
+            db.select(UserModel).filter(
+                (UserModel.username == data.get("username"))
+                | (UserModel.email == data.get("email"))
+            )
+        ).scalar()
 
         if user and check_password_hash(user.password, data["password"]):
             return AuthManager.encode_token(user)
@@ -32,7 +33,6 @@ class DeviceManager:
     def logout(data):
 
         return "Successfully logged out"
-
 
     @staticmethod
     def register(data):
@@ -51,14 +51,13 @@ class DeviceManager:
         db.session.flush()
         return AuthManager.encode_token(user)
 
-
-    #def get_homes(user):
+    # def get_homes(user):
     #    query = db.select(HomeModel)
     #    if user.role.user == RoleType.user:
     #        query = query.filter_by(user_id=user.id)
     #    return db.session.execute(query).scalar().all()
 
-    #def create_home(user, data):
+    # def create_home(user, data):
     #    data["user_id"] = user.id
     #    new_home = HomeModel(**data)
     #    db.session.add(new_home)

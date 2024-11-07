@@ -22,16 +22,17 @@ class HomeListCreate(Resource):
     def post(self):
         data = request.get_json()
         user = auth.current_user()
-        HomeManager.create_home(user,data)
-        return {'message': 'Home created successfully'}, 201
+        HomeManager.create_home(user, data)
+        return {"message": "Home created successfully"}, 201
+
 
 class HomeDetail(Resource):
     @auth.login_required
     @permission_required(RoleType.user)
     def get(self, home_id):
-        #user_id = get_jwt_identity()
+        # user_id = get_jwt_identity()
         user = auth.current_user()
-        home = HomeManager.get_home(user,home_id)
+        home = HomeManager.get_home(user, home_id)
         return {"home": HomeResponseSchema().dump(home)}, 200
 
     @auth.login_required
@@ -40,15 +41,12 @@ class HomeDetail(Resource):
     def put(self, home_id):
         user = auth.current_user()
         data = request.get_json()
-        HomeManager.update_home(user,home_id,data)
-        return {'message': 'Home updated successfully'}, 200
+        HomeManager.update_home(user, home_id, data)
+        return {"message": "Home updated successfully"}, 200
 
     @auth.login_required
     @permission_required(RoleType.user)
     def delete(self, home_id):
         user = auth.current_user()
-        HomeManager.delete_home(user,home_id)
-        return {'message': 'Home deleted successfully'}, 200
-
-
-
+        HomeManager.delete_home(user, home_id)
+        return {"message": "Home deleted successfully"}, 200

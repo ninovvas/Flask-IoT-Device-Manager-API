@@ -28,7 +28,7 @@ class APIBaseTestCase(TestCase):
             "first_name": "First_Name_Test",
             "last_name": "Last_Name_Test",
             "email": "test@abv.bg",
-            "role": "user"
+            "role": "user",
         }
 
         users = UserModel.query.all()

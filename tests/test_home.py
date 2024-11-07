@@ -1,10 +1,8 @@
-
 from tests.base import APIBaseTestCase, generate_token
 from tests.factories import UserFactory, HomeFactory
 
 
 class TestHomeResource(APIBaseTestCase):
-
 
     def test_create_home(self):
         # Test the creation of a new home with correct parameters
@@ -13,7 +11,7 @@ class TestHomeResource(APIBaseTestCase):
             "address": "123 Test St",
             "city": "Testville",
             "state": "TS",
-            "zip_code": "12345"
+            "zip_code": "12345",
         }
 
         user = UserFactory()
@@ -39,13 +37,12 @@ class TestHomeResource(APIBaseTestCase):
 
         response = self.client.get(f"/homes/{home.id}", headers=headers)
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json['home']['id'], home.id)
+        self.assertEqual(response.json["home"]["id"], home.id)
 
     def test_get_all_homes(self):
         user = UserFactory()
         user_token = generate_token(user)
         headers = {"Authorization": f"Bearer {user_token}"}
-
 
         HomeFactory(user_id=user.id)
 
@@ -59,7 +56,7 @@ class TestHomeResource(APIBaseTestCase):
             "address": "456 Initial Ave",
             "city": "Initial City",
             "state": "IC",
-            "zip_code": "67890"
+            "zip_code": "67890",
         }
         user = UserFactory()
         user_token = generate_token(user)
@@ -78,7 +75,7 @@ class TestHomeResource(APIBaseTestCase):
             "address": "789 Updated Blvd",
             "city": "Updated City",
             "state": "UC",
-            "zip_code": "98765"
+            "zip_code": "98765",
         }
         response = self.client.put(
             f"/homes/{home_id}",
@@ -95,7 +92,7 @@ class TestHomeResource(APIBaseTestCase):
             "address": "Home to Delete St",
             "city": "Delete City",
             "state": "DC",
-            "zip_code": "11111"
+            "zip_code": "11111",
         }
         user = UserFactory()
         user_token = generate_token(user)
@@ -110,16 +107,9 @@ class TestHomeResource(APIBaseTestCase):
         home_id = 1
 
         # Delete the home
-        response = self.client.delete(
-            f"/homes/{home_id}",
-            headers=headers
-        )
+        response = self.client.delete(f"/homes/{home_id}", headers=headers)
         self.assertEqual(response.status_code, 200)
 
         # Verify deletion
-        get_response = self.client.get(
-            f"/homes/{home_id}",
-            headers=headers
-        )
+        get_response = self.client.get(f"/homes/{home_id}", headers=headers)
         self.assertEqual(get_response.status_code, 404)
-

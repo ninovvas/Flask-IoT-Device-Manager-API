@@ -27,6 +27,7 @@ class DevelopmentConfig:
         f"@localhost:{config('DB_PORT')}/{config('DB_NAME')}"
     )
 
+
 class TestingConfig:
     FLASK_ENV = "testing"
     DEBUG = True

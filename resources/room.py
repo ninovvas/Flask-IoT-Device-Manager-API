@@ -1,4 +1,3 @@
-
 from flask import request
 from flask_restful import Resource
 
@@ -27,7 +26,7 @@ class RoomListCreate(Resource):
         data = request.get_json()
         user = auth.current_user()
         RoomManager.create_room(user, data)
-        return {'message': 'Room created successfully'}, 201
+        return {"message": "Room created successfully"}, 201
 
 
 class RoomDetail(Resource):
@@ -44,12 +43,12 @@ class RoomDetail(Resource):
     def put(self, room_id):
         user = auth.current_user()
         data = request.get_json()
-        RoomManager.update_room(user,room_id,data)
-        return {'message': 'Room updated successfully'}, 200
+        RoomManager.update_room(user, room_id, data)
+        return {"message": "Room updated successfully"}, 200
 
     @auth.login_required
     @permission_required(RoleType.user)
     def delete(self, room_id):
         user = auth.current_user()
-        RoomManager.delete_room(user,room_id)
-        return {'message': 'Room deleted successfully'}, 200
+        RoomManager.delete_room(user, room_id)
+        return {"message": "Room deleted successfully"}, 200

@@ -1,7 +1,13 @@
-
 import re
 
-from marshmallow import Schema, fields, validate, validates, validates_schema, ValidationError
+from marshmallow import (
+    Schema,
+    fields,
+    validate,
+    validates,
+    validates_schema,
+    ValidationError,
+)
 from marshmallow.validate import OneOf
 
 
@@ -10,28 +16,35 @@ class UserSchema(Schema):
     email = fields.Email(required=True)
     password = fields.String(required=True, validate=[validate.Length(min=6)])
 
-    @validates('username')
+    @validates("username")
     def validate_username(self, value):
         if not re.match("^[a-zA-Z0-9_.-]+$", value):
-            raise ValidationError("Username can only contain letters, numbers, dots, underscores, and hyphens.")
+            raise ValidationError(
+                "Username can only contain letters, numbers, dots, underscores, and hyphens."
+            )
 
-    @validates('password')
+    @validates("password")
     def validate_password(self, value):
         if len(value) < 8:
             raise ValidationError("Password must be at least 8 characters long.")
         if not re.search(r"[A-Z]", value):
-            raise ValidationError("Password must contain at least one uppercase letter.")
+            raise ValidationError(
+                "Password must contain at least one uppercase letter."
+            )
         if not re.search(r"[a-z]", value):
-            raise ValidationError("Password must contain at least one lowercase letter.")
+            raise ValidationError(
+                "Password must contain at least one lowercase letter."
+            )
         if not re.search(r"[0-9]", value):
-            raise ValidationError("Password must contain at least one number."
-                                  )
+            raise ValidationError("Password must contain at least one number.")
         if not re.search(r"[!@#$%^&*(),.?\":{}|<>]", value):
-            raise ValidationError("Password must contain at least one special character.")
+            raise ValidationError(
+                "Password must contain at least one special character."
+            )
 
-    @validates('email')
+    @validates("email")
     def validate_email(self, value):
-        email_regex = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
+        email_regex = r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
         if not re.match(email_regex, value):
             raise ValidationError("Invalid email address format.")
 
@@ -44,12 +57,13 @@ class UserLoginSchema(Schema):
 
     @validates_schema
     def validate_username_or_email(self, data, **kwargs):
-        username = data.get('username')
-        email = data.get('email')
+        username = data.get("username")
+        email = data.get("email")
         if not username and not email:
             raise ValidationError("Either username or email must be provided.")
         if username and email:
             raise ValidationError("Only one of username or email should be provided.")
+
 
 class UserRegisterSchema(UserSchema):
     first_name = fields.String(required=True)

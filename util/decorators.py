@@ -13,8 +13,11 @@ def permission_required(required_role):
             if current_user.role != required_role:
                 raise Forbidden("You do not have permissions to access this resource")
             return func(*args, **kwargs)
+
         return wrapper
+
     return decorator
+
 
 def validate_schema(schema_name):
     def decorator(func):
@@ -25,5 +28,7 @@ def validate_schema(schema_name):
             if errors:
                 raise BadRequest(f"Invalid payload {errors}")
             return func(*args, **kwargs)
+
         return wrapper
+
     return decorator

@@ -21,7 +21,9 @@ class HomeManager:
 
     def get_home(user, home_id):
 
-        return BaseManager.get_item(user=user, db_model=HomeModel, item_id=home_id, error_msg="Home")
+        return BaseManager.get_item(
+            user=user, db_model=HomeModel, item_id=home_id, error_msg="Home"
+        )
 
     def update_home(user, home_id, data):
 

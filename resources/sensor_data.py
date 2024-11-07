@@ -17,7 +17,9 @@ class SensorDataListCreate(Resource):
 
         user = auth.current_user()
         sensor_datas = SensorDataManager.get_sensor_datas(user)
-        return {"sensor_data": SensorDataResponseSchema().dump(sensor_datas, many=True)}, 200
+        return {
+            "sensor_data": SensorDataResponseSchema().dump(sensor_datas, many=True)
+        }, 200
 
     @auth.login_required
     @permission_required(RoleType.user)
@@ -26,9 +28,9 @@ class SensorDataListCreate(Resource):
 
         data = request.get_json()
         user = auth.current_user()
-        data.setdefault('timestamp', func.now())
+        data.setdefault("timestamp", func.now())
         SensorDataManager.create_sensor_data(user, data)
-        return {'message': 'Sensor Data created successfully'}, 201
+        return {"message": "Sensor Data created successfully"}, 201
 
 
 class SensorDataDetail(Resource):
@@ -45,12 +47,12 @@ class SensorDataDetail(Resource):
     def put(self, sensor_data_id):
         user = auth.current_user()
         data = request.get_json()
-        SensorDataManager.update_sensor_data(user,sensor_data_id,data)
-        return {'message': 'Sensor Data updated successfully'}, 200
+        SensorDataManager.update_sensor_data(user, sensor_data_id, data)
+        return {"message": "Sensor Data updated successfully"}, 200
 
     @auth.login_required
     @permission_required(RoleType.user)
     def delete(self, sensor_data_id):
         user = auth.current_user()
-        SensorDataManager.delete_sensor_data(user,sensor_data_id)
-        return {'message': 'Sensor Data deleted successfully'}, 200
+        SensorDataManager.delete_sensor_data(user, sensor_data_id)
+        return {"message": "Sensor Data deleted successfully"}, 200

@@ -17,7 +17,11 @@ class SensorScheduleListCreate(Resource):
 
         user = auth.current_user()
         sensor_datas = SensorScheduleManager.get_sensor_schedules(user)
-        return {"sensor_schedules": SensorScheduleResponseSchema().dump(sensor_datas, many=True)}, 200
+        return {
+            "sensor_schedules": SensorScheduleResponseSchema().dump(
+                sensor_datas, many=True
+            )
+        }, 200
 
     @auth.login_required
     @permission_required(RoleType.user)
@@ -26,9 +30,9 @@ class SensorScheduleListCreate(Resource):
 
         data = request.get_json()
         user = auth.current_user()
-        #data.setdefault('timestamp', func.now())
+        # data.setdefault('timestamp', func.now())
         SensorScheduleManager.create_sensor_schedule(user, data)
-        return {'message': 'Sensor Schedule created successfully'}, 201
+        return {"message": "Sensor Schedule created successfully"}, 201
 
 
 class SensorScheduleDetail(Resource):
@@ -45,12 +49,12 @@ class SensorScheduleDetail(Resource):
     def put(self, sensor_schedule_id):
         user = auth.current_user()
         data = request.get_json()
-        SensorScheduleManager.update_sensor_schedule(user,sensor_schedule_id,data)
-        return {'message': 'Sensor Schedule updated successfully'}, 200
+        SensorScheduleManager.update_sensor_schedule(user, sensor_schedule_id, data)
+        return {"message": "Sensor Schedule updated successfully"}, 200
 
     @auth.login_required
     @permission_required(RoleType.user)
     def delete(self, sensor_schedule_id):
         user = auth.current_user()
-        SensorScheduleManager.delete_sensor_schedule(user,sensor_schedule_id)
-        return {'message': 'Sensor Schedule deleted successfully'}, 200
+        SensorScheduleManager.delete_sensor_schedule(user, sensor_schedule_id)
+        return {"message": "Sensor Schedule deleted successfully"}, 200

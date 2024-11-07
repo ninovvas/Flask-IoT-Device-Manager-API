@@ -5,13 +5,21 @@ from db import db
 
 # Sensor Statistic Model
 class SensorStatisticModel(db.Model):
-    __tablename__ = 'sensor_statistic'
+    __tablename__ = "sensor_statistic"
     id: Mapped[int] = mapped_column(db.Integer, primary_key=True)
-    sensor_id: Mapped[int] = mapped_column(db.Integer, db.ForeignKey('sensor.id'), nullable=False)
+    sensor_id: Mapped[int] = mapped_column(
+        db.Integer, db.ForeignKey("sensor.id"), nullable=False
+    )
     average_value: Mapped[float] = mapped_column(db.Float, nullable=False)
     min_value: Mapped[float] = mapped_column(db.Float, nullable=False)
     max_value: Mapped[float] = mapped_column(db.Float, nullable=False)
-    timestamp: Mapped[db.DateTime] = mapped_column(db.DateTime, server_default=db.func.now())
+    timestamp: Mapped[db.DateTime] = mapped_column(
+        db.DateTime, server_default=db.func.now()
+    )
 
-    user_id: Mapped[int] = mapped_column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    sensor: Mapped['SensorModel'] = relationship('SensorModel', back_populates='sensor_statistics')
+    user_id: Mapped[int] = mapped_column(
+        db.Integer, db.ForeignKey("users.id"), nullable=False
+    )
+    sensor: Mapped["SensorModel"] = relationship(
+        "SensorModel", back_populates="sensor_statistics"
+    )

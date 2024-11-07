@@ -21,7 +21,7 @@ class SendGridService:
             from_email=from_email,
             to_emails=to_email,
             subject=subject,
-            html_content=body
+            html_content=body,
         )
 
         message.template_id = self.template_id
@@ -36,12 +36,10 @@ class SendGridService:
             print(f"Error sending email: {e}")
             return None
 
-
     def notify_sensor_data_threshold(self, sensor_data, notify_value):
         if float(sensor_data["value"]) > float(notify_value):  # Example threshold
             self.send_email(
                 to_email=self.to_email,
                 subject="My Sensor Alert",
-                body=f"Alert! This is my application! the <b>{sensor_data['sensor_name']}</b> sensor reading is too high: <b>{sensor_data['value']}</b>."
+                body=f"Alert! This is my application! the <b>{sensor_data['sensor_name']}</b> sensor reading is too high: <b>{sensor_data['value']}</b>.",
             )
-

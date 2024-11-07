@@ -16,7 +16,11 @@ class SensorStatisticListCreate(Resource):
 
         user = auth.current_user()
         sensor_datas = SensorStatisticManager.get_sensor_statistics(user)
-        return {"sensor_statistics": SensorStatisticResponseSchema().dump(sensor_datas, many=True)}, 200
+        return {
+            "sensor_statistics": SensorStatisticResponseSchema().dump(
+                sensor_datas, many=True
+            )
+        }, 200
 
     @auth.login_required
     @permission_required(RoleType.user)
@@ -25,9 +29,9 @@ class SensorStatisticListCreate(Resource):
 
         data = request.get_json()
         user = auth.current_user()
-        #data.setdefault('timestamp', func.now())
+        # data.setdefault('timestamp', func.now())
         SensorStatisticManager.create_sensor_statistic(user, data)
-        return {'message': 'Sensor Statistic created successfully'}, 201
+        return {"message": "Sensor Statistic created successfully"}, 201
 
 
 class SensorStatisticDetail(Resource):
@@ -44,12 +48,12 @@ class SensorStatisticDetail(Resource):
     def put(self, sensor_statistic_id):
         user = auth.current_user()
         data = request.get_json()
-        SensorStatisticManager.update_sensor_statistic(user,sensor_statistic_id,data)
-        return {'message': 'Sensor Statistic updated successfully'}, 200
+        SensorStatisticManager.update_sensor_statistic(user, sensor_statistic_id, data)
+        return {"message": "Sensor Statistic updated successfully"}, 200
 
     @auth.login_required
     @permission_required(RoleType.user)
     def delete(self, sensor_statistic_id):
         user = auth.current_user()
-        SensorStatisticManager.delete_sensor_statistic(user,sensor_statistic_id)
-        return {'message': 'Sensor Statistic deleted successfully'}, 200
+        SensorStatisticManager.delete_sensor_statistic(user, sensor_statistic_id)
+        return {"message": "Sensor Statistic deleted successfully"}, 200

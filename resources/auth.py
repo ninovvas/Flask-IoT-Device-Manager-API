@@ -21,10 +21,10 @@ class RegisterUser(Resource):
             return err.messages, 400
 
             # Check if email or username already exists
-        if UserModel.query.filter_by(email=user_data['email']).first():
-            return {'message': 'Email already exists'}, 400
-        if UserModel.query.filter_by(username=user_data['username']).first():
-            return {'message': 'Username already exists'}, 400
+        if UserModel.query.filter_by(email=user_data["email"]).first():
+            return {"message": "Email already exists"}, 400
+        if UserModel.query.filter_by(username=user_data["username"]).first():
+            return {"message": "Username already exists"}, 400
 
         token = DeviceManager.register(data)
         return {"token": token}, 201
@@ -36,6 +36,7 @@ class LoginUser(Resource):
         data = request.get_json()
         token = DeviceManager.login(data)
         return {"token": token}
+
 
 # Logout endpoint
 class LogoutUser(Resource):

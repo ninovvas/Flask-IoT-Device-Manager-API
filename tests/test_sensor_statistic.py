@@ -1,7 +1,14 @@
 from datetime import datetime, timedelta
 
 from tests.base import APIBaseTestCase, generate_token
-from tests.factories import UserFactory, HomeFactory, RoomFactory, SensorFactory, SensorStatisticFactory
+from tests.factories import (
+    UserFactory,
+    HomeFactory,
+    RoomFactory,
+    SensorFactory,
+    SensorStatisticFactory,
+)
+
 
 class TestSensorStatisticResource(APIBaseTestCase):
     def test_create_sensor_statistic(self):
@@ -41,7 +48,9 @@ class TestSensorStatisticResource(APIBaseTestCase):
         sensor = SensorFactory(user_id=user.id, room_id=room.id)
         sensor_statistic = SensorStatisticFactory(sensor_id=sensor.id, user_id=user.id)
 
-        response = self.client.get(f"/statistics/{sensor_statistic.id}", headers=headers)
+        response = self.client.get(
+            f"/statistics/{sensor_statistic.id}", headers=headers
+        )
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json["sensor_statistic"]["id"], sensor_statistic.id)
 
@@ -75,7 +84,7 @@ class TestSensorStatisticResource(APIBaseTestCase):
             "sensor_id": sensor.id,
             "average_value": 30.0,
             "min_value": 10.0,
-            "max_value": 50.0
+            "max_value": 50.0,
         }
 
         response_edit = self.client.put(
@@ -100,14 +109,12 @@ class TestSensorStatisticResource(APIBaseTestCase):
 
         # Delete the sensor statistic
         response = self.client.delete(
-            f"/statistics/{sensor_statistic.id}",
-            headers=headers
+            f"/statistics/{sensor_statistic.id}", headers=headers
         )
         self.assertEqual(response.status_code, 200)
 
         # Verify deletion
         get_response = self.client.get(
-            f"/statistics/{sensor_statistic.id}",
-            headers=headers
+            f"/statistics/{sensor_statistic.id}", headers=headers
         )
         self.assertEqual(get_response.status_code, 404)

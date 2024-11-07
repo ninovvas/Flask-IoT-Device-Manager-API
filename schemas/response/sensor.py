@@ -13,4 +13,3 @@ class SensorResponseSchema(BaseSensor):
     sensor_data = fields.Nested(SensorDataResponseSchema, many=True)
     sensor_schedules = fields.Nested(SensorScheduleResponseSchema, many=True)
     sensor_statistics = fields.Nested(SensorStatisticResponseSchema, many=True)
-

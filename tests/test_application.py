@@ -1,40 +1,39 @@
-#from flask_testing import TestCase
+# from flask_testing import TestCase
 from models import UserModel
-#from models import RoleType, UserModel
+
+# from models import RoleType, UserModel
 from tests.base import APIBaseTestCase, generate_token
 from tests.factories import UserFactoryAdmin
 
 
 class TestProtectedEndpoints(APIBaseTestCase):
 
-
     endpoints = (
-    ("GET", "/homes"),
-    ("POST", "/homes"),
-    ("GET", "/homes/1"),
-    ("PUT", "/homes/1"),
-    ("GET", "/rooms"),
-    ("POST", "/rooms"),
-    ("GET", "/rooms/1"),
-    ("PUT", "/rooms/1"),
-    ("GET", "/sensors"),
-    ("POST", "/sensors"),
-    ("GET", "/sensors/1"),
-    ("PUT", "/sensors/1"),
-    ("GET", "/sensor_data"),
-    ("POST", "/sensor_data"),
-    ("GET", "/sensor_data/1"),
-    ("PUT", "/sensor_data/1"),
-    ("GET", "/schedules"),
-    ("POST", "/schedules"),
-    ("GET", "/schedules/1"),
-    ("PUT", "/schedules/1"),
-    ("GET", "/statistics"),
-    ("POST", "/statistics"),
-    ("GET", "/statistics/1"),
-    ("PUT", "/statistics/1")
+        ("GET", "/homes"),
+        ("POST", "/homes"),
+        ("GET", "/homes/1"),
+        ("PUT", "/homes/1"),
+        ("GET", "/rooms"),
+        ("POST", "/rooms"),
+        ("GET", "/rooms/1"),
+        ("PUT", "/rooms/1"),
+        ("GET", "/sensors"),
+        ("POST", "/sensors"),
+        ("GET", "/sensors/1"),
+        ("PUT", "/sensors/1"),
+        ("GET", "/sensor_data"),
+        ("POST", "/sensor_data"),
+        ("GET", "/sensor_data/1"),
+        ("PUT", "/sensor_data/1"),
+        ("GET", "/schedules"),
+        ("POST", "/schedules"),
+        ("GET", "/schedules/1"),
+        ("PUT", "/schedules/1"),
+        ("GET", "/statistics"),
+        ("POST", "/statistics"),
+        ("GET", "/statistics/1"),
+        ("PUT", "/statistics/1"),
     )
-
 
     def make_request(self, method, url, headers=None):
         if method == "GET":
@@ -55,7 +54,6 @@ class TestProtectedEndpoints(APIBaseTestCase):
             self.assertEqual(resp.status_code, 401)
             expected_message = {"message": "Invalid or missing token"}
             self.assertEqual(resp.json, expected_message)
-
 
     def test_login_required_endpoints_invalid_token(self):
         headers = {"Authorization": "Bearer invalid"}
@@ -91,7 +89,7 @@ class TestProtectedEndpoints(APIBaseTestCase):
             ("GET", "/statistics"),
             ("POST", "/statistics"),
             ("GET", "/statistics/1"),
-            ("PUT", "/statistics/1")
+            ("PUT", "/statistics/1"),
         )
         user = UserFactoryAdmin()
         user_token = generate_token(user)
@@ -162,7 +160,7 @@ class TestRegister(APIBaseTestCase):
     def test_register_schema_invalid_username(self):
         data = {
             "email": "test_1234@abv.bg",
-            "username": "test@", # This is invalid value
+            "username": "test@",  # This is invalid value
             "password": "testinG@1234",
             "first_name": "first_name_test",
             "last_name": "last_name_test",
@@ -184,7 +182,7 @@ class TestRegister(APIBaseTestCase):
         data = {
             "email": "test_1234@abv.bg",
             "username": "test",
-            "password": "testinG1234", # This is invalid value
+            "password": "testinG1234",  # This is invalid value
             "first_name": "first_name_test",
             "last_name": "last_name_test",
             "role": "user",
@@ -208,7 +206,7 @@ class TestRegister(APIBaseTestCase):
             "password": "testinG@1234",
             "first_name": "first_name_test",
             "last_name": "last_name_test",
-            "role": "user12", # This is invalid value
+            "role": "user12",  # This is invalid value
         }
 
         users = UserModel.query.all()
@@ -222,6 +220,7 @@ class TestRegister(APIBaseTestCase):
         users = UserModel.query.all()
         self.assertEqual(len(users), 0)
 
+
 class TestLoginSchema(APIBaseTestCase):
     def test_login_schema_missing_fields(self):
         data = {}
@@ -229,9 +228,11 @@ class TestLoginSchema(APIBaseTestCase):
         resp = self.client.post("/login", json=data)
         self.assertEqual(resp.status_code, 400)
         error_message = resp.json["message"]
-        expected_message = "Invalid payload {'password': ['Missing data for required field.']}"
+        expected_message = (
+            "Invalid payload {'password': ['Missing data for required field.']}"
+        )
         self.assertEqual(error_message, expected_message)
-        #for field in ("email", "password"):
+        # for field in ("email", "password"):
         #    self.assertIn(field, error_message)
 
     def test_login_schema_invalid_email(self):

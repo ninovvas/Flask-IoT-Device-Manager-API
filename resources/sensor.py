@@ -1,4 +1,3 @@
-
 from flask import request
 from flask_restful import Resource
 
@@ -27,7 +26,7 @@ class SensorListCreate(Resource):
         data = request.get_json()
         user = auth.current_user()
         SensorManager.create_sensor(user, data)
-        return {'message': 'Sensor created successfully'}, 201
+        return {"message": "Sensor created successfully"}, 201
 
 
 class SensorDetail(Resource):
@@ -44,12 +43,12 @@ class SensorDetail(Resource):
     def put(self, sensor_id):
         user = auth.current_user()
         data = request.get_json()
-        SensorManager.update_sensor(user,sensor_id,data)
-        return {'message': 'Sensor updated successfully'}, 200
+        SensorManager.update_sensor(user, sensor_id, data)
+        return {"message": "Sensor updated successfully"}, 200
 
     @auth.login_required
     @permission_required(RoleType.user)
     def delete(self, sensor_id):
         user = auth.current_user()
-        SensorManager.delete_sensor(user,sensor_id)
-        return {'message': 'Sensor deleted successfully'}, 200
+        SensorManager.delete_sensor(user, sensor_id)
+        return {"message": "Sensor deleted successfully"}, 200
