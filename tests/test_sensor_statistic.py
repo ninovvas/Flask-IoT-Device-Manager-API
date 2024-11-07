@@ -31,6 +31,34 @@ class TestSensorStatisticResource(APIBaseTestCase):
         expected_message = {"message": "Sensor Statistic created successfully"}
         self.assertEqual(response.json, expected_message)
 
+    def test_get_one_sensor_statistic(self):
+        user = UserFactory()
+        user_token = generate_token(user)
+        headers = {"Authorization": f"Bearer {user_token}"}
+
+        home = HomeFactory(user_id=user.id)
+        room = RoomFactory(user_id=user.id, home_id=home.id)
+        sensor = SensorFactory(user_id=user.id, room_id=room.id)
+        sensor_statistic = SensorStatisticFactory(sensor_id=sensor.id, user_id=user.id)
+
+        response = self.client.get(f"/statistics/{sensor_statistic.id}", headers=headers)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json["sensor_statistic"]["id"], sensor_statistic.id)
+
+    def test_get_all_sensor_statistics(self):
+        user = UserFactory()
+        user_token = generate_token(user)
+        headers = {"Authorization": f"Bearer {user_token}"}
+
+        home = HomeFactory(user_id=user.id)
+        room = RoomFactory(user_id=user.id, home_id=home.id)
+        sensor = SensorFactory(user_id=user.id, room_id=room.id)
+        SensorStatisticFactory.create_batch(1, sensor_id=sensor.id, user_id=user.id)
+
+        response = self.client.get("/statistics", headers=headers)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.json), 1)
+
     def test_edit_sensor_statistic(self):
         user = UserFactory()
         user_token = generate_token(user)

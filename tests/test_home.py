@@ -1,6 +1,6 @@
 
 from tests.base import APIBaseTestCase, generate_token
-from tests.factories import UserFactory
+from tests.factories import UserFactory, HomeFactory
 
 
 class TestHomeResource(APIBaseTestCase):
@@ -27,6 +27,31 @@ class TestHomeResource(APIBaseTestCase):
         self.assertEqual(response.status_code, 201)
         expected_message = {"message": "Home created successfully"}
         self.assertEqual(response.json, expected_message)
+
+        # Home tests
+
+    def test_get_one_home(self):
+        user = UserFactory()
+        user_token = generate_token(user)
+        headers = {"Authorization": f"Bearer {user_token}"}
+
+        home = HomeFactory(user_id=user.id)
+
+        response = self.client.get(f"/homes/{home.id}", headers=headers)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json['home']['id'], home.id)
+
+    def test_get_all_homes(self):
+        user = UserFactory()
+        user_token = generate_token(user)
+        headers = {"Authorization": f"Bearer {user_token}"}
+
+
+        HomeFactory(user_id=user.id)
+
+        response = self.client.get("/homes", headers=headers)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.json), 1)
 
     def test_edit_home(self):
         # First, create a home to edit

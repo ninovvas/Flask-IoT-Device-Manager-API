@@ -88,10 +88,10 @@ class TestProtectedEndpoints(APIBaseTestCase):
             ("POST", "/schedules"),
             ("GET", "/schedules/1"),
             ("PUT", "/schedules/1"),
-            ("GET", "/sensor_statistics"),
-            ("POST", "/sensor_statistics"),
-            ("GET", "/sensor_statistics/1"),
-            ("PUT", "/sensor_statistics/1")
+            ("GET", "/statistics"),
+            ("POST", "/statistics"),
+            ("GET", "/statistics/1"),
+            ("PUT", "/statistics/1")
         )
         user = UserFactoryAdmin()
         user_token = generate_token(user)

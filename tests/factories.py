@@ -65,7 +65,7 @@ class HomeFactory(BaseFactory):
     address = factory.Faker("address")
     city = factory.Faker("city")
     state = factory.Faker("state")
-    zip_code =  factory.Sequence(lambda n: 70000 + n)
+    zip_code =  74657 #factory.Sequence(lambda n: 70000 + n)
     user_id = factory.SubFactory(UserFactory)
 
 class RoomFactory(BaseFactory):

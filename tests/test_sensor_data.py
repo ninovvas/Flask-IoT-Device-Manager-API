@@ -28,6 +28,34 @@ class TestSensorDataResource(APIBaseTestCase):
         expected_message = {"message": "Sensor Data created successfully"}
         self.assertEqual(response.json, expected_message)
 
+    def test_get_one_sensor_data(self):
+        user = UserFactory()
+        user_token = generate_token(user)
+        headers = {"Authorization": f"Bearer {user_token}"}
+
+        home = HomeFactory(user_id=user.id)
+        room = RoomFactory(user_id=user.id, home_id=home.id)
+        sensor = SensorFactory(user_id=user.id, room_id=room.id)
+        sensor_data = SensorDataFactory(sensor_id=sensor.id, user_id=user.id)
+
+        response = self.client.get(f"/sensor_data/{sensor_data.id}", headers=headers)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json["sensor_data"]["id"], sensor_data.id)
+
+    def test_get_all_sensor_data(self):
+        user = UserFactory()
+        user_token = generate_token(user)
+        headers = {"Authorization": f"Bearer {user_token}"}
+
+        home = HomeFactory(user_id=user.id)
+        room = RoomFactory(user_id=user.id, home_id=home.id)
+        sensor = SensorFactory(user_id=user.id, room_id=room.id)
+        SensorDataFactory.create_batch(1, sensor_id=sensor.id, user_id=user.id)
+
+        response = self.client.get("/sensor_data", headers=headers)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.json), 1)
+
     def test_edit_sensor_data(self):
 
         user = UserFactory()

@@ -29,6 +29,30 @@ class TestRoomResource(APIBaseTestCase):
         expected_message = {"message": "Room created successfully"}
         self.assertEqual(response.json, expected_message)
 
+    def test_get_one_room(self):
+        user = UserFactory()
+        user_token = generate_token(user)
+        headers = {"Authorization": f"Bearer {user_token}"}
+
+        home = HomeFactory(user_id=user.id)
+        room = RoomFactory(user_id=user.id, home_id=home.id)
+
+        response = self.client.get(f"/rooms/{room.id}", headers=headers)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json["room"]["id"], room.id)
+
+    def test_get_all_rooms(self):
+        user = UserFactory()
+        user_token = generate_token(user)
+        headers = {"Authorization": f"Bearer {user_token}"}
+
+        home = HomeFactory(user_id=user.id)
+        RoomFactory.create_batch(1, user_id=user.id, home_id=home.id)
+
+        response = self.client.get("/rooms", headers=headers)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.json), 1)
+
     def test_edit_room(self):
 
         user = UserFactory()
