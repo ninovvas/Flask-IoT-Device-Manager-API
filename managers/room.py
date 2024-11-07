@@ -29,18 +29,6 @@ class RoomManager:
         """
         return BaseManager.get_item(user=user, db_model=RoomModel, item_id=room_id, error_msg="Room")
 
-        #query = db.select(RoomModel)
-        #room = db.session.execute(
-        #    query.filter_by(id=room_id)
-        #).scalar()
-
-        #if not room:
-        #    raise NotFound(f"Room with id {room_id} does not exist")
-
-        #if user.role.user == RoleType.user:
-        #    query = query.filter_by(id=room_id, user_id=user.id)
-        #return db.session.execute(query).scalar()
-
     @staticmethod
     def update_room(user, room_id, data):
 

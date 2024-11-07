@@ -1,8 +1,10 @@
+from datetime import datetime
+
 import factory
 from werkzeug.security import generate_password_hash
 
 from db import db
-from models import UserModel, RoleType, HomeModel, RoomModel, SensorModel
+from models import UserModel, RoleType, HomeModel, RoomModel, SensorModel, SensorDataModel
 
 
 class BaseFactory(factory.Factory):
@@ -83,4 +85,13 @@ class SensorFactory(BaseFactory):
     producer = "Bosh"
     interface = "CAN"
     room_id = factory.SubFactory(RoomFactory)
+    user_id = factory.SubFactory(UserFactory)
+
+class SensorDataFactory(BaseFactory):
+    class Meta:
+        model = SensorDataModel
+
+    sensor_id = factory.SubFactory(SensorFactory)
+    value = factory.Sequence(lambda n: 1.0 * n)
+    timestamp = datetime.now()
     user_id = factory.SubFactory(UserFactory)

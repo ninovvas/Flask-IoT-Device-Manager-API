@@ -20,18 +20,6 @@ class HomeManager:
         db.session.flush()
 
     def get_home(user, home_id):
-        #query = db.select(HomeModel)
-
-        #home = db.session.execute(
-        #    query.filter_by(id=home_id)
-        #).scalar()
-
-        #if not home:
-        #    raise NotFound(f"Home with id {home_id} does not exist")
-
-        #if user.role.user == RoleType.user:
-        #    query = query.filter_by(id=home_id, user_id=user.id)
-        #return db.session.execute(query).scalar()
 
         return BaseManager.get_item(user=user, db_model=HomeModel, item_id=home_id, error_msg="Home")
 
