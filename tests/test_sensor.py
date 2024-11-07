@@ -1,85 +1,82 @@
 from tests.base import APIBaseTestCase, generate_token
-from tests.factories import UserFactory, HomeFactory, RoomFactory
+from tests.factories import UserFactory, HomeFactory, RoomFactory, SensorFactory
 
-
-class TestRoomResource(APIBaseTestCase):
-    def test_create_room(self):
+class TestSensorResource(APIBaseTestCase):
+    def test_create_sensor(self):
 
         user = UserFactory()
         user_token = generate_token(user)
         headers = {"Authorization": f"Bearer {user_token}"}
 
-        # create Home
+        # Create Home and Room
         home = HomeFactory(user_id=user.id)
+        room = RoomFactory(user_id=user.id, home_id=home.id)
 
-        # Create Room
-
+        # Sensor data
         data = {
-            "name": "Test Room",
-            "description": "A room for testing purposes.",
-            "home_id": home.id
+            "name": "Temperature Sensor",
+            "sensor_type": "temperature",
+            "producer": "Siemens",
+            "interface": "I2C",
+            "room_id": room.id
         }
 
         response = self.client.post(
-            "/rooms",
+            "/sensors",
             headers=headers,
             json=data,
         )
         self.assertEqual(response.status_code, 201)
-        expected_message = {"message": "Room created successfully"}
+        expected_message = {"message": "Sensor created successfully"}
         self.assertEqual(response.json, expected_message)
 
-    def test_edit_room(self):
-
+    def test_edit_sensor(self):
         user = UserFactory()
-        print(f"#####################")
-        print(f"user ID {user.id}")
         user_token = generate_token(user)
         headers = {"Authorization": f"Bearer {user_token}"}
 
-        # create Home
+        # Create Home, Room, and Sensor
         home = HomeFactory(user_id=user.id)
-
-        # Create a room to edit
         room = RoomFactory(user_id=user.id, home_id=home.id)
+        sensor = SensorFactory(user_id=user.id, room_id=room.id)
 
-        # Edit the room
+        # Edit the sensor
         edit_data = {
-            "name": "Updated Room",
-            "description": "Updated description.",
-            "home_id": 1
+            "name": "Temperature Sensor",
+            "sensor_type": "temperature",
+            "producer": "Siemens",
+            "interface": "I2C",
+            "room_id": room.id
         }
         response_edit = self.client.put(
-            f"/rooms/{room.id}",
+            f"/sensors/{sensor.id}",
             headers=headers,
             json=edit_data,
         )
         self.assertEqual(response_edit.status_code, 200)
-        expected_message = {"message": "Room updated successfully"}
+        expected_message = {"message": "Sensor updated successfully"}
         self.assertEqual(response_edit.json, expected_message)
 
-    def test_delete_room(self):
-
+    def test_delete_sensor(self):
         user = UserFactory()
         user_token = generate_token(user)
         headers = {"Authorization": f"Bearer {user_token}"}
 
-        # create Home
+        # Create Home, Room, and Sensor
         home = HomeFactory(user_id=user.id)
-
-        # Create a room to edit
         room = RoomFactory(user_id=user.id, home_id=home.id)
+        sensor = SensorFactory(user_id=user.id, room_id=room.id)
 
-        # Delete the room
+        # Delete the sensor
         response = self.client.delete(
-            f"/rooms/{room.id}",
+            f"/sensors/{sensor.id}",
             headers=headers
         )
         self.assertEqual(response.status_code, 200)
 
         # Verify deletion
         get_response = self.client.get(
-            f"/rooms/1",
+            f"/sensors/{sensor.id}",
             headers=headers
         )
         self.assertEqual(get_response.status_code, 404)
