@@ -20,6 +20,6 @@ routes = (
     (SensorDataDetail, '/sensor_data/<int:sensor_data_id>'),
     (SensorScheduleListCreate, '/schedules'),
     (SensorScheduleDetail, '/schedules/<int:sensor_schedule_id>'),
-    (SensorStatisticListCreate, '/sensor_statistics'),
-    (SensorStatisticDetail, '/sensor_statistics/<int:sensor_statistic_id>')
+    (SensorStatisticListCreate, '/statistics'),
+    (SensorStatisticDetail, '/statistics/<int:sensor_statistic_id>')
 )

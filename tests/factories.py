@@ -4,7 +4,8 @@ import factory
 from werkzeug.security import generate_password_hash
 
 from db import db
-from models import UserModel, RoleType, HomeModel, RoomModel, SensorModel, SensorDataModel, SensorScheduleModel
+from models import UserModel, RoleType, HomeModel, RoomModel, SensorModel, SensorDataModel, SensorScheduleModel, \
+    SensorStatisticModel
 
 
 class BaseFactory(factory.Factory):
@@ -106,3 +107,13 @@ class SensorScheduleFactory(BaseFactory):
     end_time = (datetime.now() + timedelta(hours=2)).strftime('%Y-%m-%dT%H:%M:%S')
     action  = "start"
     user_id = factory.SubFactory(UserFactory)
+
+class SensorStatisticFactory(BaseFactory):
+    class Meta:
+        model = SensorStatisticModel
+
+    sensor_id = factory.SubFactory(SensorFactory)
+    average_value = factory.Sequence(lambda n: 1.0 * n)
+    min_value = factory.Sequence(lambda n: 1.0 * n)
+    max_value = factory.Sequence(lambda n: 1.0 * n)
+
