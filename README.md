@@ -96,8 +96,7 @@ flask_iot_device_manager/
     "password": "password1234",
     "first_name": "First Name",
     "last_name": "Last Name",
-    "email": "username1@gmail.bg",
-    "role": "user"
+    "email": "username1@gmail.bg"
     }
     ```
 
@@ -300,6 +299,23 @@ flask_iot_device_manager/
 ### User Authentication
 - **POST** `/login`
   - **Description**: Login a user.
+
+### User
+- **POST** `admins/users`
+  - **Description**: Create a new user.
+  -  - **Example**:
+    ```json
+    {
+    "username": "User_form_Admin",
+    "password": "parolkA@123",
+    "first_name": "User form Admin1",
+    "last_name": "ser form Admin2",
+    "email": "auser10@abv.bg",
+    "role": "user"
+    }
+    ```
+- **GET** `admins/users`
+  - **Description**: Get all users. Only admin can see the users
 
 ## Testing the Endpoints
 
