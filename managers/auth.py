@@ -13,10 +13,14 @@ class AuthManager:
     @staticmethod
     def encode_token(user):
         """
+        Generate a JSON Web Token (JWT) for the given user.
 
-        :param user:
-        :return:
+        :param user: User object containing user details like `id` and `role`.
+        :type user: UserModel
+        :return: Encoded JWT as a string.
+        :rtype: str
         """
+
         payload = {
             "sub": user.id,
             "exp": datetime.utcnow() + timedelta(days=2),
@@ -27,9 +31,14 @@ class AuthManager:
     @staticmethod
     def decode_token(token):
         """
+        Decode a JSON Web Token (JWT) to retrieve the user ID and role.
 
-        :param token:
-        :return:
+        :param token: The JWT to be decoded.
+        :type token: str
+        :return: A tuple containing the user ID and role.
+        :rtype: tuple(int, str)
+        :raises jwt.ExpiredSignatureError: If the token has expired.
+        :raises jwt.InvalidTokenError: If the token is invalid.
         """
         try:
             info = jwt.decode(jwt=token, key=config("SECRET_KEY"), algorithms=["HS256"])
@@ -44,9 +53,13 @@ auth = HTTPTokenAuth(scheme="Bearer")
 @auth.verify_token
 def verify_token(token):
     """
+    Verify the given token and retrieve the corresponding user from the database.
 
-    :param token:
-    :return:
+    :param token: The JWT to be verified.
+    :type token: str
+    :return: User object if the token is valid.
+    :rtype: UserModel
+    :raises Unauthorized: If the token is invalid or missing.
     """
     try:
         user_id, type_user = AuthManager.decode_token(token)
