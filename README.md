@@ -73,35 +73,15 @@ flask_iot_device_manager/
 
 - **app/**: Contains the main application code.
   - **models/**: Contains the database models, representing entities such as homes, rooms, sensors, and sensor data.
-  - **routes/**: Defines the routes/endpoints for handling requests related to homes, rooms, sensors, etc.
+  - **resources/**: Contains the resource controllers for handling API requests.
   - **schemas/**: Defines request and response validation schemas using tools like Marshmallow.
+  - **services/**: Contains the business logic for managing homes, rooms, sensors, etc.
+  - **tests/**: Contains unit and integration tests for the application.
   - **utils/**: Contains utility functions and modules such as the database setup.
-- **config.py**: Configuration settings for the application.
-- **requirements.txt**: Lists the dependencies required to run the project.
-- **run.py**: The entry point to start the application.
-
-- **app/**: Contains the main application code.
-
-- **models/**: Contains the database models, representing entities such as homes, rooms, sensors, and sensor data.
-
-- **resources/**: Contains the resource controllers for handling API requests.
-
-- **schemas/**: Defines request and response validation schemas using tools like Marshmallow.
-
-- **services/**: Contains the business logic for managing homes, rooms, sensors, etc.
-
-- **tests/**: Contains unit and integration tests for the application.
-
-- **utils/**: Contains utility functions and modules such as the database setup.
-
-- **config.py**: Configuration settings for the application.
-
-- **requirements.txt**: Lists the dependencies required to run the project.
-
-- **app.py**: Main application entry point.
-
-- **db.py**: Database initialization and connection.
-
+  - **config.py**: Configuration settings for the application.
+  - **app.py**: Main application entry point.
+  - **db.py**: Database initialization and connection.
+  - **requirements.txt**: Lists the dependencies required to run the project.
 
 
 ## API Endpoints
