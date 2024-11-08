@@ -68,4 +68,8 @@ class UserLoginSchema(Schema):
 class UserRegisterSchema(UserSchema):
     first_name = fields.String(required=True)
     last_name = fields.String(required=True)
+    # role = fields.String(required=True, validate=OneOf(["admin", "user"]))
+
+
+class UserCreateRequestSchema(UserRegisterSchema):
     role = fields.String(required=True, validate=OneOf(["admin", "user"]))

@@ -5,6 +5,7 @@ from resources.sensor import SensorListCreate, SensorDetail
 from resources.sensor_data import SensorDataListCreate, SensorDataDetail
 from resources.sensor_schedule import SensorScheduleListCreate, SensorScheduleDetail
 from resources.sensor_statistic import SensorStatisticListCreate, SensorStatisticDetail
+from resources.user import User
 
 routes = (
     (RegisterUser, "/register"),
@@ -22,4 +23,5 @@ routes = (
     (SensorScheduleDetail, "/schedules/<int:sensor_schedule_id>"),
     (SensorStatisticListCreate, "/statistics"),
     (SensorStatisticDetail, "/statistics/<int:sensor_statistic_id>"),
+    (User, "/admins/users"),
 )

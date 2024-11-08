@@ -1,9 +1,7 @@
-# from flask_testing import TestCase
 from models import UserModel
 
-# from models import RoleType, UserModel
 from tests.base import APIBaseTestCase, generate_token
-from tests.factories import UserFactoryAdmin
+from tests.factories import UserFactoryAdmin, UserFactory
 
 
 class TestProtectedEndpoints(APIBaseTestCase):
@@ -103,21 +101,19 @@ class TestProtectedEndpoints(APIBaseTestCase):
             }
             self.assertEqual(resp.json, expected_message)
 
-    # def test_permission_required_endpoints_admin(self):
-    #     endpoints = (
-    #         ("POST", "/users"),
-    #     )
-    #     user = UserFactoryAdmin()
-    #     user_token = generate_token(user)
-    #     headers = {"Authorization": f"Bearer {user_token}"}
-    #     for method, url in endpoints:
-    #         resp = self.make_request(method, url, headers=headers)
-    #
-    #         self.assertEqual(resp.status_code, 403)
-    #         expected_message = {
-    #             "message": "You do not have permissions to access this resource"
-    #         }
-    #         self.assertEqual(resp.json, expected_message)
+    def test_permission_required_endpoints_admins_negative(self):
+        endpoints = (("POST", "/admins/users"),)
+        user = UserFactory()
+        user_token = generate_token(user)
+        headers = {"Authorization": f"Bearer {user_token}"}
+        for method, url in endpoints:
+            resp = self.make_request(method, url, headers=headers)
+
+            self.assertEqual(resp.status_code, 403)
+            expected_message = {
+                "message": "You do not have permissions to access this resource"
+            }
+            self.assertEqual(resp.json, expected_message)
 
 
 class TestRegister(APIBaseTestCase):
@@ -143,7 +139,6 @@ class TestRegister(APIBaseTestCase):
             "password": "testinG@1234",
             "first_name": "first_name_test",
             "last_name": "last_name_test",
-            "role": "user",
         }
 
         users = UserModel.query.all()
@@ -164,7 +159,6 @@ class TestRegister(APIBaseTestCase):
             "password": "testinG@1234",
             "first_name": "first_name_test",
             "last_name": "last_name_test",
-            "role": "user",
         }
 
         users = UserModel.query.all()
@@ -185,7 +179,6 @@ class TestRegister(APIBaseTestCase):
             "password": "testinG1234",  # This is invalid value
             "first_name": "first_name_test",
             "last_name": "last_name_test",
-            "role": "user",
         }
 
         users = UserModel.query.all()
@@ -195,27 +188,6 @@ class TestRegister(APIBaseTestCase):
         self.assertEqual(resp.status_code, 400)
         error_message = resp.json["message"]
         expected_message = "Invalid payload {'password': ['Password must contain at least one special character.']}"
-        self.assertEqual(error_message, expected_message)
-        users = UserModel.query.all()
-        self.assertEqual(len(users), 0)
-
-    def test_register_schema_invalid_role(self):
-        data = {
-            "email": "test_1234@abv.bg",
-            "username": "test",
-            "password": "testinG@1234",
-            "first_name": "first_name_test",
-            "last_name": "last_name_test",
-            "role": "user12",  # This is invalid value
-        }
-
-        users = UserModel.query.all()
-        self.assertEqual(len(users), 0)
-
-        resp = self.client.post("/register", json=data)
-        self.assertEqual(resp.status_code, 400)
-        error_message = resp.json["message"]
-        expected_message = "Invalid payload {'role': ['Must be one of: admin, user.']}"
         self.assertEqual(error_message, expected_message)
         users = UserModel.query.all()
         self.assertEqual(len(users), 0)

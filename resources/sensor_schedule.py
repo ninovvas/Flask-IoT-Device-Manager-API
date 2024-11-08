@@ -1,6 +1,5 @@
 from flask import request
 from flask_restful import Resource
-from sqlalchemy import func
 
 from managers.auth import auth
 from managers.sensor_schedule import SensorScheduleManager

@@ -1,5 +1,3 @@
-from datetime import datetime, timedelta
-
 from tests.base import APIBaseTestCase, generate_token
 from tests.factories import (
     UserFactory,

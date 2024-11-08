@@ -3,7 +3,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 from db import db
 from managers.auth import auth
-from models import UserModel
+from models import UserModel, RoleType
 
 
 class UserManager:
@@ -28,3 +28,11 @@ class UserManager:
         )
         db.session.add(user)
         db.session.flush()
+
+    @staticmethod
+    def get_users(user):
+        if user.role.admin == RoleType.admin:
+            query = db.select(UserModel)
+            return db.session.execute(query).scalars().all()
+        else:
+            raise BadRequest("The user is not admin!")
