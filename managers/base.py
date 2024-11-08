@@ -112,13 +112,13 @@ class BaseManager:
         :type error_msg: str
         :raises NotFound: If the item with the given ID does not exist or does not belong to the user.
         """
-        home = db.session.execute(
+        item = db.session.execute(
             db.select(db_model).filter_by(id=item_id, user_id=user.id)
         ).scalar()
-        if not home:
+        if not item:
             raise NotFound(f"{error_msg} with id {item_id} does not exist")
 
-        db.session.delete(home)
+        db.session.delete(item)
         db.session.flush()
 
     @staticmethod
